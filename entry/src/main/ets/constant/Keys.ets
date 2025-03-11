@@ -68,4 +68,8 @@ export class Keys {
    * value = [string]
    */
   static CURRENTLY_RECEIVING_SESSION = 'CURRENTLY_RECEIVING_SESSION'
+  /**
+   * 开发者模式
+   */
+  static IS_DEV_MODE = 'IS_DEV_MODE'
 }

@@ -6,7 +6,7 @@ import { ThemeProvider } from '../../../../theme/ThemeProvider';
 import { ThemeMenu } from './ThemeMenu';
 import { ConfigurationConstant } from '@kit.AbilityKit';
 import { AutoSaveModel } from '../../../../model';
-import { DialogProvider, Routers } from '../../../../utils';
+import { Dates, DialogProvider, Routers } from '../../../../utils';
 import { ServiceAction } from './ServiceAction';
 import { AliasAction } from './AliasAction';
 import { InputAction } from './InputAction';
@@ -31,6 +31,9 @@ export struct Setting {
   @StorageLink(Keys.MULTICAST_ADDRESS) multicast: string = ''
   @State isInputFocused: boolean = false
   @StorageLink(Keys.SAVE_RECEIVE_RECORD) isSaveReceiveRecord: boolean = false
+  @StorageLink(Keys.IS_DEV_MODE) isDevMode: boolean = false
+  aboutClicks: number = 0
+  aboutClickTime: number = 0
 
   build() {
     // 卡片折叠态，展开态的共同父组件
@@ -219,7 +222,7 @@ export struct Setting {
                   value: this.port,
                   inputType: InputType.Number,
                   onChanged: () => {
-                    AppStorage.set(Keys.PORT, this.port)
+                    AppStorage.set(Keys.PORT, Number.parseInt(this.port))
                     this.onServiceConfigChanged()
                   }
                 })
@@ -252,20 +255,52 @@ export struct Setting {
                   this.pages.pushDestination({ name: Routers.ABOUT_PAGE })
                 })
 
-              SettingItem({ text: '开发者工具' }) {
-                Button('打开', { buttonStyle: ButtonStyleMode.TEXTUAL })
-                  .onClick(() => {
-                    this.pages.pushDestination({ name: Routers.DEVELOPER_TOOLS })
-                  })
+              if (this.isDevMode) {
+                SettingItem({ text: '开发者工具' }) {
+                  Button('打开', { buttonStyle: ButtonStyleMode.TEXTUAL })
+                    .onClick(() => {
+                      this.pages.pushDestination({ name: Routers.DEVELOPER_TOOLS })
+                    })
+                }
               }
             }
             .alignItems(HorizontalAlign.Start)
             .padding(SizeConstant.SPACE_M)
             .backgroundColor($r('app.color.container'))
             .borderRadius(SizeConstant.RADIUS_L)
+
+
+            Column() {
+
+              Blank().height(56)
+
+              Image($r("app.media.logo_text"))
+                .width(120)
+                .onClick(() => {
+                  const now = Dates.now()
+                  if (now - this.aboutClickTime > 1000) {
+                    this.aboutClicks = 1
+                    this.aboutClickTime = now
+                  } else if (this.aboutClicks >= 7) {
+                    if (this.isDevMode === true) {
+                      toast.show('已经是开发者模式了')
+                      return
+                    }
+                    this.isDevMode = true
+                    this.aboutClicks = 0
+                    this.aboutClickTime = 0
+                    toast.show('已开启开发者模式')
+                  } else {
+                    this.aboutClicks += 1
+                    this.aboutClickTime = now
+                  }
+                })
+
+              Blank().height(56)
+            }
+            .alignItems(HorizontalAlign.Center)
           }
           .constraintSize({ minHeight: '100%' })
-          .padding(SizeConstant.SPACE_L)
           .onFocus(() => {
             this.isInputFocused = true
           })

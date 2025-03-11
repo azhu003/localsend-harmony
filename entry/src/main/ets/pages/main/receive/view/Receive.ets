@@ -60,7 +60,7 @@ export struct Receive {
 
       Blank().height(SizeConstant.SPACE_L)
 
-      Icon({ src: $r('app.media.logo'), dimension: 256 }).rotate(this.logoAnim)
+      Icon({ src: $r("app.media.logo"), dimension: 200, spacing: SizeConstant.SPACE_XXL }).rotate(this.logoAnim)
       Text(this.alias || "")
         .fontSize(36)
         .fontWeight(FontWeight.Medium)

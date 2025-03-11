@@ -8,7 +8,7 @@ import { cryptoFramework } from '@kit.CryptoArchitectureKit';
 import { DeviceMapper } from '../../db/mapper';
 import { Connection, Page, Wapper } from 'rdbplus';
 import { CardColumn } from './CardColumn';
-import { NearbyDeviceModel, ReceiveRecordModel, SimpleMoveFile } from '../../model';
+import { DeviceModel, NearbyDeviceModel, ReceiveRecordModel, SimpleMoveFile } from '../../model';
 import { ReceivedRecordMapper } from '../../db/mapper/ReceiveRecordMapper';
 import { BaseDialogOptions, DialogAction, DialogHelper, SpinType } from '@pura/harmony-dialog';
 import { common, ConfigurationConstant, Want } from '@kit.AbilityKit';
@@ -227,6 +227,15 @@ export struct DeveloperToolsPage {
               })
               Blank().height(SizeConstant.SPACE_M)
 
+            }
+
+            CardColumn({ title: 'API测试' }) {
+              Button('Object API').onClick(() => {
+                const device = new DeviceModel()
+                device.hostname = '127.0.0.1'
+                console.log(`Object.keys: ${Object.keys(device)}`)
+                console.log(`Object.values: ${Object.values(device)}`)
+              })
             }
           }
           .justifyContent(FlexAlign.Start)
