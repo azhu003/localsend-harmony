@@ -29,5 +29,7 @@ export class PersistentStorageProvider {
     PersistentStorage.persistProp(Keys.AUTO_SAVE_MODEL, AutoSaveModel.CLOSE)
     //Web服务监听端口
     PersistentStorage.persistProp(Keys.PORT, 53317)
+    //开发者模式: 默认关闭
+    PersistentStorage.persistProp(Keys.IS_DEV_MODE, false)
   }
 }

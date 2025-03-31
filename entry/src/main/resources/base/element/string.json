@@ -10,7 +10,7 @@
     },
     {
       "name": "EntryAbility_label",
-      "value": "LocalSend"
+      "value": "LanSend"
     },
     {
       "name": "receive",
@@ -314,7 +314,7 @@
     },
     {
       "name": "file_move_to_download_tips",
-      "value": "由于系统限制，当前文件存放在应用沙箱目录中(文件管理中不可见)，点击下方按钮将文件移动至“Download/LocalSend”文件夹"
+      "value": "由于系统限制，当前文件存放在应用沙箱目录中(文件管理中不可见)，点击下方按钮将文件移动至“Download/LanSend”文件夹"
     },
     {
       "name": "file_move_to_download_error",
@@ -546,7 +546,7 @@
     },
     {
       "name": "official_website",
-      "value": "官方网站："
+      "value": "LocalSend官方网站："
     },
     {
       "name": "about_text",

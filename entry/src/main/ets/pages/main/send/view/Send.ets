@@ -64,7 +64,7 @@ export struct Send {
             //     })
             //   Blank().width(SizeConstant.SPACE_M)
             // }
-            SelectorButton({ text: $r('app.string.media'), icon: $r('app.media.ic_file') })
+            SelectorButton({ text: $r('app.string.media'), icon: $r('app.media.ic_picture') })
               .layoutWeight(1)
               .onClick(() => ClickUtil.throttle(() => {
                 this.addMediaClick(getContext(this))

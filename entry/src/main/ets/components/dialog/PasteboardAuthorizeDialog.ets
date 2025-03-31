@@ -19,7 +19,7 @@ export function PasteboardAuthorizeDialog(options: PasteboardAuthorizeDialogOpti
       .fontSize(SizeConstant.TEXT_L)
     Blank().height(SizeConstant.SPACE_L)
     PasteButton()
-      .backgroundColor($r('app.color.primary'))
+      // .backgroundColor($r('app.color.primary'))
       .fontColor(Color.White)
       .onClick((_: ClickEvent, result: PasteButtonOnClickResult) => {
         if (result === PasteButtonOnClickResult.SUCCESS) {

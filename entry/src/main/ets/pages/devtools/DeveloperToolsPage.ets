@@ -8,7 +8,7 @@ import { cryptoFramework } from '@kit.CryptoArchitectureKit';
 import { DeviceMapper } from '../../db/mapper';
 import { Connection, Page, Wapper } from 'rdbplus';
 import { CardColumn } from './CardColumn';
-import { NearbyDeviceModel, ReceiveRecordModel, SimpleMoveFile } from '../../model';
+import { NearbyDeviceModel, ReceiveRecordModel, /*SimpleMoveFile*/ } from '../../model';
 import { ReceivedRecordMapper } from '../../db/mapper/ReceiveRecordMapper';
 import { BaseDialogOptions, DialogAction, DialogHelper, SpinType } from '@pura/harmony-dialog';
 import { common, ConfigurationConstant, Want } from '@kit.AbilityKit';
@@ -110,13 +110,13 @@ export struct DeveloperToolsPage {
               Button('获取已接收文件列表').onClick(() => {
                 this.getFiles()
               })
-              if (this.fileNames && this.fileNames.length > 0) {
-                Blank().height(SizeConstant.SPACE_M)
-                SaveButton(this.saveButtonOptions)// .size({ width: SizeConstant.ICON_XL, height: SizeConstant.ICON_XL })
-                  .onClick(async (_, result: SaveButtonOnClickResult) => {
-                    this.onSaveImageToAlbumClick(result, this.fileNames)
-                  })
-              }
+              // if (this.fileNames && this.fileNames.length > 0) {
+              //   Blank().height(SizeConstant.SPACE_M)
+              //   SaveButton(this.saveButtonOptions)// .size({ width: SizeConstant.ICON_XL, height: SizeConstant.ICON_XL })
+              //     .onClick(async (_, result: SaveButtonOnClickResult) => {
+              //       this.onSaveImageToAlbumClick(result, this.fileNames)
+              //     })
+              // }
               Blank().height(SizeConstant.SPACE_M)
               Row() {
                 Button('获取发送缓存列表').onClick(() => {
@@ -228,6 +228,15 @@ export struct DeveloperToolsPage {
               Blank().height(SizeConstant.SPACE_M)
 
             }
+
+            CardColumn({ title: 'API测试' }) {
+              Button('Object API').onClick(() => {
+                const device = new NearbyDeviceModel()
+                device.hostname = '127.0.0.1'
+                console.log(`Object.keys: ${Object.keys(device)}`)
+                console.log(`Object.values: ${Object.values(device)}`)
+              })
+            }
           }
           .justifyContent(FlexAlign.Start)
           .padding(SizeConstant.SPACE_L)
@@ -302,44 +311,45 @@ export struct DeveloperToolsPage {
     await mapper.getList(new Wapper())
   }
 
-  async onSaveImageToAlbumClick(result: SaveButtonOnClickResult, fileNames: string[]) {
-    if (result == SaveButtonOnClickResult.SUCCESS) {
-      // const fileType: string = mime.getType(fileName) || ''
-      // console.info(`save file. type: ${fileType}`)
-      // try {
-      //   let context = getContext();
-      //   let phAccessHelper = photoAccessHelper.getPhotoAccessHelper(context);
-      //   // 需要确保fileUri对应的资源存在
-      //   const fileUri: string = `${getContext(this).filesDir}/received/${fileName}`
-      //   const fileType: string | null = mime.getType(fileUri)
-      //   if (fileType?.startsWith('image')) {
-      //     let assetChangeRequest: photoAccessHelper.MediaAssetChangeRequest =
-      //       photoAccessHelper.MediaAssetChangeRequest.createImageAssetRequest(context, fileUri);
-      //     await phAccessHelper.applyChanges(assetChangeRequest);
-      //     console.info('createAsset successfully, uri: ' + assetChangeRequest.getAsset().uri);
-      //     toast.show('转存成功')
-      //   } else if (fileType?.startsWith('video')) {
-      //     let assetChangeRequest: photoAccessHelper.MediaAssetChangeRequest =
-      //       photoAccessHelper.MediaAssetChangeRequest.createVideoAssetRequest(context, fileUri);
-      //     await phAccessHelper.applyChanges(assetChangeRequest);
-      //     toast.show('转存成功')
-      //     console.info('createAsset successfully, uri: ' + assetChangeRequest.getAsset().uri);
-      //   } else if (fileType?.startsWith('application')) {
-      //     this.saveFileToDownload(fileName)
-      //     // 请确保 getContext(this) 返回结果为 UIAbilityContext
-      //   }
-      // } catch (err) {
-      //   console.error(`create asset failed with error: ${err.code}, ${err.message}`);
-      // }
-      const infos: SimpleMoveFile[] = []
-      for (const element of fileNames) {
-        infos.push(new SimpleMoveFile(`${FileProvider.getDefaultFileDir(getContext(this))}/${element}`))
-      }
-      FileProvider.moveFilesToDownload(getContext(this), infos)
-    } else {
-      console.error('SaveButtonOnClickResult create asset failed');
-    }
-  }
+  // async onSaveImageToAlbumClick(result: SaveButtonOnClickResult, fileNames: string[]) {
+  //   if (result == SaveButtonOnClickResult.SUCCESS) {
+  //     const fileType: string = mime.getType(fileName) || ''
+  //     console.info(`save file. type: ${fileType}`)
+  //     try {
+  //       let context = getContext();
+  //       let phAccessHelper = photoAccessHelper.getPhotoAccessHelper(context);
+  //       // 需要确保fileUri对应的资源存在
+  //       const fileUri: string = `${getContext(this).filesDir}/received/${fileName}`
+  //       const fileType: string | null = mime.getType(fileUri)
+  //       if (fileType?.startsWith('image')) {
+  //         let assetChangeRequest: photoAccessHelper.MediaAssetChangeRequest =
+  //           photoAccessHelper.MediaAssetChangeRequest.createImageAssetRequest(context, fileUri);
+  //         await phAccessHelper.applyChanges(assetChangeRequest);
+  //         console.info('createAsset successfully, uri: ' + assetChangeRequest.getAsset().uri);
+  //         toast.show('转存成功')
+  //       } else if (fileType?.startsWith('video')) {
+  //         let assetChangeRequest: photoAccessHelper.MediaAssetChangeRequest =
+  //           photoAccessHelper.MediaAssetChangeRequest.createVideoAssetRequest(context, fileUri);
+  //         await phAccessHelper.applyChanges(assetChangeRequest);
+  //         toast.show('转存成功')
+  //         console.info('createAsset successfully, uri: ' + assetChangeRequest.getAsset().uri);
+  //       } else if (fileType?.startsWith('application')) {
+  //         this.saveFileToDownload(fileName)
+  //         // 请确保 getContext(this) 返回结果为 UIAbilityContext
+  //       }
+  //     } catch (err) {
+  //       console.error(`create asset failed with error: ${err.code}, ${err.message}`);
+  //     }
+  //
+  //     const infos: SimpleMoveFile[] = []
+  //     for (const element of fileNames) {
+  //       infos.push(new SimpleMoveFile(`${FileProvider.getDefaultFileDir(getContext(this))}/${element}`))
+  //     }
+  //     FileProvider.moveFilesToDownload(getContext(this), infos)
+  //   } else {
+  //     console.error('SaveButtonOnClickResult create asset failed');
+  //   }
+  // }
 
   async delFile(fileName: string) {
     try {

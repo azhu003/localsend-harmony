@@ -1,22 +1,22 @@
- import { fileIo as fs, fileUri, picker } from '@kit.CoreFileKit';
+import { fileUri, fileIo as fs, picker } from '@kit.CoreFileKit';
 import { Errors, logger } from 'common';
 import { HttpError, HttpExchange } from 'serve';
-import { ErrorMessage, FileInfoModel, FileTransferStatus, TransferProgressChangedAction, ReceiveRecordModel } from '../../model';
+import { ErrorMessage, FileInfoModel, FileTransferStatus, ReceiveRecordModel, TransferProgressChangedAction } from '../../model';
 import { EventBus, EventType, TransferFileProgressEvent } from '../../eventbus';
 import { ArkTSUtils } from '@kit.ArkTS';
 import { Dates, DeviceProvider, FileProvider } from '../../utils';
 import { FlushTask } from './FlushTask';
 import { Keys } from '../../constant';
 import { ReceivedRecordMapper } from '../../db/mapper/ReceiveRecordMapper';
- import { BusinessError } from '@kit.BasicServicesKit';
 
- const TAG = 'FlushService'
+const TAG = 'FlushService'
 
 /**
  * 文件写入服务
  */
 export class FlushService {
   private exchange: HttpExchange | null
+  private writeFile: fs.File | undefined
   private isFlushing: boolean = false
   private isFinished: boolean = false
   private progress: number = 0
@@ -115,6 +115,7 @@ export class FlushService {
     }
     this.isFlushing = false; // 任务处理完成
     if (this.isFinished) {
+      this.close()
       this.exchange!!.writeJson(new ErrorMessage())
       this.postEvent({
         fileId: this.fileInfo.id,
@@ -128,39 +129,39 @@ export class FlushService {
     }
   }
 
-  private async flushToDisk(flush: FlushTask): Promise<number> {
+  private async create(): Promise<void> {
+    try {
+      const documentViewPicker = new picker.DocumentViewPicker();
+      const documentSaveOptions = new picker.DocumentSaveOptions();
+      documentSaveOptions.pickerMode = picker.DocumentPickerMode.DOWNLOAD;
 
-    const documentViewPicker = new picker.DocumentViewPicker();
-
-    const documentSaveOptions = new picker.DocumentSaveOptions();
-
-    documentSaveOptions.pickerMode = picker.DocumentPickerMode.DOWNLOAD;
-
-    let length: number = 0;
-    documentViewPicker.save(documentSaveOptions).then( async (documentSaveResult: Array<string>) => {
-      let uri = documentSaveResult[0];
-      console.debug("this.filePath is: ",this.fileInfo.fileName);
-
+      const saved = await documentViewPicker.save(documentSaveOptions)
+      let uri = saved[0]
       if (this.fileInfo.fileName.includes("/")) {
-        let fileDirs = new fileUri.FileUri(uri +"/"+ this.fileInfo.fileName.slice(0,this.fileInfo.fileName.lastIndexOf("/"))).path;
-        if (! await fs.access(fileDirs, fs.AccessModeType.EXIST)) {
+        let fileDirs = new fileUri.FileUri(uri + "/" + this.fileInfo.fileName.slice(0, this.fileInfo.fileName.lastIndexOf("/"))).path;
+        if (!await fs.access(fileDirs, fs.AccessModeType.EXIST)) {
           console.log(`--- 文件夹不存在 准备创建文件夹: ${fileDirs}`)
-          fs.mkdir(fileDirs,true)
+          fs.mkdir(fileDirs, true)
           console.log(`--- 文件夹创建完成: ${fileDirs}`)
         }
       }
+      this.filePath = new fileUri.FileUri(uri + "/" + this.fileInfo.fileName).path;
+      this.writeFile = fs.openSync(this.filePath, fs.OpenMode.CREATE | fs.OpenMode.READ_WRITE);
+      console.log(`--- 文件创建成功: ${this.filePath}`)
+    } catch (e) {
+      this.close()
+      console.log(`--- 文件创建失败: ${this.filePath} ${Errors.getErrorMessage(e)}`)
+      throw HttpError.error(500)
+    }
+  }
 
-      const filePath = new fileUri.FileUri(uri +"/"+ this.fileInfo.fileName).path;
-      console.debug("filePath is: ",filePath);
-      const file = fs.openSync(filePath,fs.OpenMode.CREATE|fs.OpenMode.READ_WRITE);
 
-      length = fs.writeSync(file.fd,flush.buffer);
-      fs.closeSync(file.fd);
-    }).catch((err: BusinessError) => {
-      console.error(`Invoke documentViewPicker.save failed, code is ${err.code} message is ${err.message}`);
-    })
-
-
+  private async flushToDisk(flush: FlushTask): Promise<number> {
+    if (!this.writeFile) {
+      await this.create()
+    }
+    let length: number = 0;
+    length = fs.writeSync(this.writeFile!!.fd, flush.buffer);
     // this.stream!!.write(flush.buffer)
     if (this.checkCancel()) {
       return 0
@@ -188,6 +189,18 @@ export class FlushService {
       return true
     }
     return false
+  }
+
+  private close() {
+    if (this.writeFile) {
+      try {
+        fs.closeSync(this.writeFile.fd)
+      } catch (e) {
+        logger.warn(TAG, "closing writeFile error. " + Errors.getErrorMessage(e))
+      } finally {
+        this.writeFile = undefined
+      }
+    }
   }
 
   private toHistory() {
