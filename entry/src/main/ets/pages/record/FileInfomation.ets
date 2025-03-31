@@ -1,5 +1,5 @@
 import { DateUtil } from '@pura/harmony-utils'
-import { logger, SizeConstant } from 'common'
+import { SizeConstant } from 'common'
 import { SingleLineText } from '../../components'
 import { ReceiveRecordModel } from '../../model'
 import { FileProvider } from '../../utils'
@@ -44,7 +44,7 @@ export struct FileInfomation {
         .lineHeight(lineHeight)
 
       SingleLineText({
-        text: this.data.filePath,
+        text: this.data.filePath || " ",
         textSize: SizeConstant.TEXT_L,
         textColor: $r('app.color.on_background'),
         overflow: this.isLongPress ? TextOverflow.MARQUEE : TextOverflow.Ellipsis,
