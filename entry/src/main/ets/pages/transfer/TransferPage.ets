@@ -15,7 +15,6 @@ import { Dates, FileProvider, Routers } from '../../utils';
 import { FileItem } from './FileItem';
 import { EventBus, EventType } from '../../eventbus';
 import { emitter } from '@kit.BasicServicesKit';
-import { MoveFileDialogBuilder, MoveFileDialogOptions } from './MoveFileDialogBuilder';
 import { Keys } from '../../constant';
 import { ReceivedRecordMapper } from '../../db/mapper/ReceiveRecordMapper';
 import { Wapper } from 'rdbplus';
@@ -322,9 +321,9 @@ export struct TransferPage {
           }
           if (!this.allCompleted && this.completed === this.param.files.length) {
             this.allCompleted = true
-            if (!this.param.isSent && action.status === FileTransferStatus.COMPLETED) {
-              this.onReceiveComplete()
-            }
+            // if (!this.param.isSent && action.status === FileTransferStatus.COMPLETED) {
+            //   this.onReceiveComplete()
+            // }
           }
         }
         const index = this.param.files.findIndex((info: FileInfoModel) => info.id === action.fileId)
@@ -360,88 +359,88 @@ export struct TransferPage {
   /**
    * 接收完成，弹窗提示移动文件到Download应用文件夹
    */
-  onReceiveComplete() {
-    this.mMoveFileAuthorizeDialogId = DialogHelper.showCustomDialog<MoveFileDialogOptions>(
-      wrapBuilder(MoveFileDialogBuilder),
-      {
-        uiContext: this.getUIContext(),
-        onAction: (action: DialogAction) => {
-          if (action === DialogAction.ONE && this.mMoveFileAuthorizeDialogId != null) {
-            DialogHelper.closeDialog(this.mMoveFileAuthorizeDialogId)
-            this.mMoveFileAuthorizeDialogId = null
-          }
-        },
-        context: getContext(this),
-        onMovementAuthorized: async () => {
-          if (this.mMoveFileAuthorizeDialogId != null) {
-            DialogHelper.closeDialog(this.mMoveFileAuthorizeDialogId)
-            this.mMoveFileAuthorizeDialogId = null
-          }
-          this.doMoveReceiveFiles()
-        },
-      }
-    )
-  }
-
-  private async doMoveReceiveFiles() {
-    //picker.DocumentViewPicker(context).save(options) 导致了loading不显示?
-    // DialogHelper.showLoadingDialog({
-    //   loadType: SpinType.spinZ,
-    //   loadColor: $r('app.color.on_container'),
-    //   backgroundColor: $r('app.color.container'),
-    //   autoCancel: false,
-    //   isModal: false
-    // })
-    /**
-     * DocumentViewPicker会导致Dialog无法正常显示
-     * @link https://developer.huawei.com/consumer/cn/doc/harmonyos-releases-V5/changelogs-ux-b071-V5#%E6%A8%A1%E6%80%81uiextension%E5%88%9B%E5%BB%BA%E9%BB%98%E8%AE%A4%E8%A1%8C%E4%B8%BA%E5%8F%98%E6%9B%B4
-     */
-    this.isMovingFile = true
-    try {
-      const completeFileInfos: FileTransferInfo[] = []
-      const keys: string[] = Object.keys(this.status)
-      for (let i = 0; i < keys.length; i++) {
-        const element: FileTransferInfo = this.status[keys[i]]
-        if (element.status === FileTransferStatus.COMPLETED && element.filePath) {
-          completeFileInfos.push(element)
-        }
-      }
-      let succeed = 0
-      if (completeFileInfos.length > 0) {
-        succeed = await FileProvider.moveFilesToDownload(getContext(this), completeFileInfos, (moved: IMoveFile) => {
-          this.onMovedFileComplete(moved)
-        })
-        if (succeed === 0) {
-          toast.show($r('app.string.file_move_failed'))
-        } else if (succeed === completeFileInfos.length) {
-          toast.show($r('app.string.file_move_complete'))
-        } else {
-          toast.show($r('app.string.some_file_move_failed'))
-        }
-      }
-    } catch (e) {
-      logger.warn('TransferPage', `移动文件出错: ${Errors.getErrorMessage(e)}`)
-    } finally {
-      // DialogHelper.closeLoading()
-      this.isMovingFile = false
-    }
-  }
-
-  private onMovedFileComplete(moved: IMoveFile) {
-    if (this.param.isSent || !AppStorage.get<boolean>(Keys.SAVE_RECEIVE_RECORD) ||
-      !(moved instanceof FileTransferInfo) || Strings.isEmpty(moved.getFilepath())) {
-      logger.debug('TransferPage', `更新接收记录 已跳过`)
-      return
-    }
-    new ReceivedRecordMapper().update(new Wapper().set('filePath', moved.getFilepath()).eq('fileId', moved.fileId))
-      .then(() => {
-        logger.debug('TransferPage', `更新接收记录成功 => fileId: ${moved.fileId} newFilePath: ${moved.getFilepath()}`)
-      })
-      .catch((reason: object) => {
-        logger.warn(
-          'TransferPage',
-          `更新接收记录失败 => fileId: ${moved.fileId} newFilePath: ${moved.getFilepath()} Error: ${Errors.getErrorMessage(reason)}`
-        )
-      })
-  }
+  // onReceiveComplete() {
+  //   this.mMoveFileAuthorizeDialogId = DialogHelper.showCustomDialog<MoveFileDialogOptions>(
+  //     wrapBuilder(MoveFileDialogBuilder),
+  //     {
+  //       uiContext: this.getUIContext(),
+  //       onAction: (action: DialogAction) => {
+  //         if (action === DialogAction.ONE && this.mMoveFileAuthorizeDialogId != null) {
+  //           DialogHelper.closeDialog(this.mMoveFileAuthorizeDialogId)
+  //           this.mMoveFileAuthorizeDialogId = null
+  //         }
+  //       },
+  //       context: getContext(this),
+  //       onMovementAuthorized: async () => {
+  //         if (this.mMoveFileAuthorizeDialogId != null) {
+  //           DialogHelper.closeDialog(this.mMoveFileAuthorizeDialogId)
+  //           this.mMoveFileAuthorizeDialogId = null
+  //         }
+  //         this.doMoveReceiveFiles()
+  //       },
+  //     }
+  //   )
+  // }
+  //
+  // private async doMoveReceiveFiles() {
+  //   //picker.DocumentViewPicker(context).save(options) 导致了loading不显示?
+  //   // DialogHelper.showLoadingDialog({
+  //   //   loadType: SpinType.spinZ,
+  //   //   loadColor: $r('app.color.on_container'),
+  //   //   backgroundColor: $r('app.color.container'),
+  //   //   autoCancel: false,
+  //   //   isModal: false
+  //   // })
+  //   /**
+  //    * DocumentViewPicker会导致Dialog无法正常显示
+  //    * @link https://developer.huawei.com/consumer/cn/doc/harmonyos-releases-V5/changelogs-ux-b071-V5#%E6%A8%A1%E6%80%81uiextension%E5%88%9B%E5%BB%BA%E9%BB%98%E8%AE%A4%E8%A1%8C%E4%B8%BA%E5%8F%98%E6%9B%B4
+  //    */
+  //   this.isMovingFile = true
+  //   try {
+  //     const completeFileInfos: FileTransferInfo[] = []
+  //     const keys: string[] = Object.keys(this.status)
+  //     for (let i = 0; i < keys.length; i++) {
+  //       const element: FileTransferInfo = this.status[keys[i]]
+  //       if (element.status === FileTransferStatus.COMPLETED && element.filePath) {
+  //         completeFileInfos.push(element)
+  //       }
+  //     }
+  //     let succeed = 0
+  //     if (completeFileInfos.length > 0) {
+  //       succeed = await FileProvider.moveFilesToDownload(getContext(this), completeFileInfos, (moved: IMoveFile) => {
+  //         this.onMovedFileComplete(moved)
+  //       })
+  //       if (succeed === 0) {
+  //         toast.show($r('app.string.file_move_failed'))
+  //       } else if (succeed === completeFileInfos.length) {
+  //         toast.show($r('app.string.file_move_complete'))
+  //       } else {
+  //         toast.show($r('app.string.some_file_move_failed'))
+  //       }
+  //     }
+  //   } catch (e) {
+  //     logger.warn('TransferPage', `移动文件出错: ${Errors.getErrorMessage(e)}`)
+  //   } finally {
+  //     // DialogHelper.closeLoading()
+  //     this.isMovingFile = false
+  //   }
+  // }
+  //
+  // private onMovedFileComplete(moved: IMoveFile) {
+  //   if (this.param.isSent || !AppStorage.get<boolean>(Keys.SAVE_RECEIVE_RECORD) ||
+  //     !(moved instanceof FileTransferInfo) || Strings.isEmpty(moved.getFilepath())) {
+  //     logger.debug('TransferPage', `更新接收记录 已跳过`)
+  //     return
+  //   }
+  //   new ReceivedRecordMapper().update(new Wapper().set('filePath', moved.getFilepath()).eq('fileId', moved.fileId))
+  //     .then(() => {
+  //       logger.debug('TransferPage', `更新接收记录成功 => fileId: ${moved.fileId} newFilePath: ${moved.getFilepath()}`)
+  //     })
+  //     .catch((reason: object) => {
+  //       logger.warn(
+  //         'TransferPage',
+  //         `更新接收记录失败 => fileId: ${moved.fileId} newFilePath: ${moved.getFilepath()} Error: ${Errors.getErrorMessage(reason)}`
+  //       )
+  //     })
+  // }
 }

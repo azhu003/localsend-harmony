@@ -1,4 +1,4 @@
-import { fileIo as fs } from '@kit.CoreFileKit';
+ import { fileIo as fs, fileUri, picker } from '@kit.CoreFileKit';
 import { Errors, logger } from 'common';
 import { HttpError, HttpExchange } from 'serve';
 import { ErrorMessage, FileInfoModel, FileTransferStatus, TransferProgressChangedAction, ReceiveRecordModel } from '../../model';
@@ -8,18 +8,17 @@ import { Dates, DeviceProvider, FileProvider } from '../../utils';
 import { FlushTask } from './FlushTask';
 import { Keys } from '../../constant';
 import { ReceivedRecordMapper } from '../../db/mapper/ReceiveRecordMapper';
+ import { BusinessError } from '@kit.BasicServicesKit';
 
-const TAG = 'FlushService'
+ const TAG = 'FlushService'
 
 /**
  * 文件写入服务
  */
 export class FlushService {
   private exchange: HttpExchange | null
-  private stream: fs.Stream | undefined
   private isFlushing: boolean = false
   private isFinished: boolean = false
-  private fileDir: string
   private progress: number = 0
   private fileInfo: FileInfoModel
   private filePath: string = ''
@@ -29,11 +28,9 @@ export class FlushService {
   private lastNoticeMilli: number = 0
   private isCanceled: boolean = false
 
-  constructor(exchange: HttpExchange, fileDir: string, fileInfo: FileInfoModel) {
+  constructor(exchange: HttpExchange, fileInfo: FileInfoModel) {
     this.exchange = exchange
-    this.fileDir = fileDir
     this.fileInfo = fileInfo
-    this.filePath = `${fileDir}/${fileInfo.fileName}`
     this.startMilli = Dates.now()
   }
 
@@ -59,23 +56,6 @@ export class FlushService {
    */
   cancel() {
     this.isCanceled = true
-  }
-
-  private async create(): Promise<void> {
-    try {
-      if (!await fs.access(this.fileDir, fs.AccessModeType.EXIST)) {
-        console.log(`--- 文件夹不存在 准备创建文件夹: ${this.fileDir}`)
-        await fs.mkdir(this.fileDir)
-        console.log(`--- 文件夹创建完成: ${this.fileDir}`)
-      }
-      this.filePath = await FileProvider.getUniqueFilepath(this.filePath)
-      this.stream = await fs.createStream(this.filePath, 'w')
-      console.log(`--- 文件创建成功: ${this.filePath}`)
-    } catch (e) {
-      console.log(`--- 文件创建失败: ${this.filePath} ${Errors.getErrorMessage(e)}`)
-      this.stream?.close()
-      throw HttpError.error(500)
-    }
   }
 
   private async add(flush: FlushTask) {
@@ -135,7 +115,6 @@ export class FlushService {
     }
     this.isFlushing = false; // 任务处理完成
     if (this.isFinished) {
-      this.close()
       this.exchange!!.writeJson(new ErrorMessage())
       this.postEvent({
         fileId: this.fileInfo.id,
@@ -150,10 +129,39 @@ export class FlushService {
   }
 
   private async flushToDisk(flush: FlushTask): Promise<number> {
-    if (!this.stream) {
-      await this.create()
-    }
-    const length = await this.stream!!.write(flush.buffer)
+
+    const documentViewPicker = new picker.DocumentViewPicker();
+
+    const documentSaveOptions = new picker.DocumentSaveOptions();
+
+    documentSaveOptions.pickerMode = picker.DocumentPickerMode.DOWNLOAD;
+
+    let length: number = 0;
+    documentViewPicker.save(documentSaveOptions).then( async (documentSaveResult: Array<string>) => {
+      let uri = documentSaveResult[0];
+      console.debug("this.filePath is: ",this.fileInfo.fileName);
+
+      if (this.fileInfo.fileName.includes("/")) {
+        let fileDirs = new fileUri.FileUri(uri +"/"+ this.fileInfo.fileName.slice(0,this.fileInfo.fileName.lastIndexOf("/"))).path;
+        if (! await fs.access(fileDirs, fs.AccessModeType.EXIST)) {
+          console.log(`--- 文件夹不存在 准备创建文件夹: ${fileDirs}`)
+          fs.mkdir(fileDirs,true)
+          console.log(`--- 文件夹创建完成: ${fileDirs}`)
+        }
+      }
+
+      const filePath = new fileUri.FileUri(uri +"/"+ this.fileInfo.fileName).path;
+      console.debug("filePath is: ",filePath);
+      const file = fs.openSync(filePath,fs.OpenMode.CREATE|fs.OpenMode.READ_WRITE);
+
+      length = fs.writeSync(file.fd,flush.buffer);
+      fs.closeSync(file.fd);
+    }).catch((err: BusinessError) => {
+      console.error(`Invoke documentViewPicker.save failed, code is ${err.code} message is ${err.message}`);
+    })
+
+
+    // this.stream!!.write(flush.buffer)
     if (this.checkCancel()) {
       return 0
     }
@@ -176,16 +184,10 @@ export class FlushService {
         total: this.fileInfo.size,
         speed: 0
       })
-      this.close()
       FileProvider.deleteFile(this.filePath)
       return true
     }
     return false
-  }
-
-  private close() {
-    this.stream?.close()
-    this.stream = undefined
   }
 
   private toHistory() {
