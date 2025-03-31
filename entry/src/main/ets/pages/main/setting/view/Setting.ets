@@ -300,6 +300,7 @@ export struct Setting {
             }
             .alignItems(HorizontalAlign.Center)
           }
+          .padding({ left: SizeConstant.SPACE_L, right: SizeConstant.SPACE_L })
           .constraintSize({ minHeight: '100%' })
           .onFocus(() => {
             this.isInputFocused = true
