@@ -4,7 +4,7 @@ import { SizeConstant } from 'common/src/main/ets/constant/SizeConstant'
 import { Wapper } from 'rdbplus/src/main/ets/Wapper'
 import { FileIcon, Icon, SingleLineText } from '../../components'
 import { ReceivedRecordMapper } from '../../db'
-import { IMoveFile, ReceiveRecordModel, SimpleMoveFile } from '../../model'
+import { IMoveFile, ReceiveRecordModel } from '../../model'
 import { FileProvider } from '../../utils'
 import { FileMenu } from './FileMenu'
 
@@ -44,7 +44,7 @@ export struct RecordItem {
           .size({ width: SizeConstant.ICON_XL, height: SizeConstant.ICON_XL })
           .onClick(async (_, result: SaveButtonOnClickResult) => {
             if (result == SaveButtonOnClickResult.SUCCESS) {
-              this.doMoveReceiveFiles()
+              // this.doMoveReceiveFiles()
             } else {
               toast.show($r('app.string.file_move_to_download_error'))
             }
@@ -67,22 +67,22 @@ export struct RecordItem {
     return `${DateUtil.getFormatDateStr(this.data.sendAt)} - ${FileProvider.formatBytes(this.data.size)} - ${this.data.sender}`
   }
 
-  private async doMoveReceiveFiles() {
-    try {
-      this.onFileMoving?.(true)
-      const files: SimpleMoveFile[] = [new SimpleMoveFile(this.data.filePath)]
-      await FileProvider.moveFilesToDownload(getContext(this), files, (moved: IMoveFile) => {
-        this.data.filePath = moved.getFilepath()
-        //修改数据库该文件存放目录
-        new ReceivedRecordMapper().update(new Wapper().set('filePath', moved.getFilepath()).eq('id', this.data.id))
-        toast.show($r('app.string.file_move_complete'))
-        this.onFileMoving?.(false)
-      })
-    } catch (e) {
-      logger.warn('TransferPage', `移动文件出错: ${Errors.getErrorMessage(e)}`)
-      toast.show($r('app.string.file_move_failed'))
-    } finally {
-      // DialogHelper.closeLoading()
-    }
-  }
+//   private async doMoveReceiveFiles() {
+//     try {
+//       this.onFileMoving?.(true)
+//       const files: SimpleMoveFile[] = [new SimpleMoveFile(this.data.filePath)]
+//       await FileProvider.moveFilesToDownload(getContext(this), files, (moved: IMoveFile) => {
+//         this.data.filePath = moved.getFilepath()
+//         //修改数据库该文件存放目录
+//         new ReceivedRecordMapper().update(new Wapper().set('filePath', moved.getFilepath()).eq('id', this.data.id))
+//         toast.show($r('app.string.file_move_complete'))
+//         this.onFileMoving?.(false)
+//       })
+//     } catch (e) {
+//       logger.warn('TransferPage', `移动文件出错: ${Errors.getErrorMessage(e)}`)
+//       toast.show($r('app.string.file_move_failed'))
+//     } finally {
+//       // DialogHelper.closeLoading()
+//     }
+//   }
 }

@@ -137,6 +137,7 @@ export struct ReceiveRecordPage {
         this.current = page.current
         this.total = page.total
         this.records.push(...page.record)
+        logger.debug('ReceiveRecordPage',`record: ${this.records}`)
       })
       .catch((reason: object) => {
         console.error(`获取接收记录出错: ${Errors.getErrorMessage(reason)}`)

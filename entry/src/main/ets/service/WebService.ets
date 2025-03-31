@@ -231,7 +231,7 @@ export class WebService {
     }
 
     if (!exchange.isEnd) {
-      const flush: FlushService = new FlushService(exchange, this.filesDir, info.file)
+      const flush: FlushService = new FlushService(exchange, info.file)
       EventBus.getInstance().once(EventType.UPLOAD_FILE_CANCELED, () => {
         flush.cancel()
         const target = DeviceProvider.getDevice(exchange.getRemoteAddress()?.address || '')
