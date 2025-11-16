@@ -3,12 +3,13 @@ import { IconButton, NavigationTitle } from '../../components'
 import { ReceivedFileModel, ReceiveRecordModel } from '../../model'
 import { RecordItem } from './RecordItem'
 import { JSON } from '@kit.ArkTS'
-import { ObservedArray } from '../../utils'
+import { ObservedArray, Apps } from '../../utils'
 import { Errors, logger, Screens, toast } from 'common'
 import { Page, Wapper } from 'rdbplus'
 import { ReceivedRecordMapper } from '../../db/mapper/ReceiveRecordMapper'
 import { DialogAction, DialogHelper, SpinKit, SpinType } from '@pura/harmony-dialog'
-import { common, Want } from '@kit.AbilityKit'
+import { common } from '@kit.AbilityKit'
+import { BusinessError } from '@kit.BasicServicesKit'
 
 @Builder
 export function ReceiveRecordPageBuilder() {
@@ -47,12 +48,10 @@ export struct ReceiveRecordPage {
                   .backgroundColor($r('app.color.container'))
                   .padding({ left: SizeConstant.SPACE_M, right: SizeConstant.SPACE_M })
                   .onClick(() => {
-                    const context: common.UIAbilityContext = getContext(this) as common.UIAbilityContext;
-                    let want: Want = {
-                      bundleName: 'com.huawei.hmos.filemanager',
-                      abilityName: 'MainAbility'
-                    };
-                    context.startAbility(want);
+                    let context: common.UIAbilityContext = getContext() as common.UIAbilityContext;
+                    Apps.toAppDownloadFolder(context).catch((err: BusinessError) => {
+                      toast.show(`打开失败 ${err.code}, ${err.message}`)
+                    })
                   })
 
                 Blank().width(SizeConstant.SPACE_XL)
@@ -137,7 +136,7 @@ export struct ReceiveRecordPage {
         this.current = page.current
         this.total = page.total
         this.records.push(...page.record)
-        logger.debug('ReceiveRecordPage',`record: ${this.records}`)
+        logger.debug('ReceiveRecordPage', `record: ${this.records}`)
       })
       .catch((reason: object) => {
         console.error(`获取接收记录出错: ${Errors.getErrorMessage(reason)}`)
