@@ -15,7 +15,10 @@ export struct AliasAction {
     Column() {
       Icon({ src: $r('app.media.ic_random') })
         .onClick(() => {
-          this.value = DeviceProvider.getRandomAlias(getContext(this).resourceManager)
+          const rm = this.getUIContext().getHostContext()?.resourceManager
+          if (rm != null) {
+            this.value = DeviceProvider.getRandomAlias(rm)
+          }
         })
       Blank().height(SizeConstant.SPACE_M)
       TextInput({ text: $$this.value })

@@ -132,11 +132,9 @@ export struct ReceiveRecordPage {
   aboutToAppear(): void {
     new ReceivedRecordMapper().getPage(this.current, 1000, new Wapper().orderByDesc('id'))
       .then((page: Page<ReceiveRecordModel>) => {
-        console.info(`接收记录: ${JSON.stringify(page)}`)
         this.current = page.current
         this.total = page.total
         this.records.push(...page.record)
-        logger.debug('ReceiveRecordPage', `record: ${this.records}`)
       })
       .catch((reason: object) => {
         console.error(`获取接收记录出错: ${Errors.getErrorMessage(reason)}`)

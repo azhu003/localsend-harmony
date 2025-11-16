@@ -1,5 +1,5 @@
 import resmgr from '@ohos.resourceManager';
-import { Objects, Strings } from 'common';
+import { Errors, logger, Objects, Strings } from 'common';
 import { DeviceModel } from '../model/DeviceModel';
 import { util } from '@kit.ArkTS';
 import { Keys } from '../constant';
@@ -7,6 +7,7 @@ import { MulticastModel, NearbyDeviceModel } from '../model';
 import wifiManager from '@ohos.wifiManager';
 import { RandomUtil } from '@pura/harmony-utils';
 import { DeviceMapper } from '../db/mapper/DeviceMapper';
+import { deviceInfo } from '@kit.BasicServicesKit';
 
 export class DeviceProvider {
   static REGISTERED_DEVICE_LIST_KEY = "REGISTERED_DEVICE_LIST_KEY"
@@ -16,14 +17,19 @@ export class DeviceProvider {
   }
 
   static getRandomAlias(resource: resmgr.ResourceManager): string {
-    let adjectives = resource.getStringArrayValueSync($r('app.strarray.alias_adjectives'))
-    let fruits = resource.getStringArrayValueSync($r('app.strarray.alias_fruits'))
+    try {
+      let adjectives = resource.getStringArrayValueSync($r('app.strarray.alias_adjectives').id)
+      let fruits = resource.getStringArrayValueSync($r('app.strarray.alias_fruits').id)
 
-    let adjective = adjectives[RandomUtil.getRandomInt(0, adjectives.length)]
-    let fruit = fruits[RandomUtil.getRandomInt(0, fruits.length)]
+      let adjective = adjectives[RandomUtil.getRandomInt(0, adjectives.length)]
+      let fruit = fruits[RandomUtil.getRandomInt(0, fruits.length)]
 
-    let alias = resource.getStringSync($r('app.string.alias_combination'))
-    return Strings.formatString(alias, adjective, fruit)
+      let alias = resource.getStringSync($r('app.string.alias_combination').id)
+      return Strings.formatString(alias, adjective, fruit)
+    } catch (e) {
+      logger.warn('DeviceProvider', `随机生成设备名称失败: ${Errors.getErrorMessage(e)}`)
+      return 'Oh, oh'
+    }
   }
 
   static async addOrReplaceDevice(device: DeviceModel) {

@@ -54,23 +54,23 @@
     },
     {
       "name": "delete_all",
-      "value": "删除全部"
+      "value": "Delete all files"
     },
     {
       "name": "no_data",
-      "value": "无数据"
+      "value": "No data"
     },
     {
       "name": "clipboard_permission_tips",
-      "value": "由于系统限制，为了保护你的隐私安全，请点击下方\"粘贴\"按钮，以授权APP临时读取剪切板内容"
+      "value": "Tap \"Paste\" to allow temporary clipboard access."
     },
     {
       "name": "clipboard_permission_failed",
-      "value": "获取临时授权失败，无法读取剪切板数据"
+      "value": "Failed to obtain temporary clipboard access. Unable to read data."
     },
     {
       "name": "clipboard_nodata",
-      "value": "当前剪切板无内容"
+      "value": "The clipboard is empty"
     },
     {
       "name": "nearby_devices",
@@ -170,7 +170,7 @@
     },
     {
       "name": "copy_succeed",
-      "value": "复制成功"
+      "value": "Copied"
     },
     {
       "name": "waiting_response",
@@ -186,7 +186,7 @@
     },
     {
       "name": "too_many_requests",
-      "value": "请求过多"
+      "value": "Too many requests"
     },
     {
       "name": "error",
@@ -194,7 +194,7 @@
     },
     {
       "name": "quick_operation",
-      "value": "快捷操作"
+      "value": "Quick operation"
     },
     {
       "name": "unchanged",
@@ -286,11 +286,11 @@
     },
     {
       "name": "transferring",
-      "value": "传输中"
+      "value": "Transferring"
     },
     {
       "name": "incorrect",
-      "value": "出错"
+      "value": "Error"
     },
     {
       "name": "skiped",
@@ -314,7 +314,7 @@
     },
     {
       "name": "file_transfer_complete",
-      "value": "文件传输完成"
+      "value": "File transfer completed"
     },
     {
       "name": "file_move_to_download_tips",
@@ -322,7 +322,7 @@
     },
     {
       "name": "file_move_to_download_error",
-      "value": "操作失败，未能获取到临时权限"
+      "value": "Operation failed: unable to obtain temporary permissions."
     },
     {
       "name": "file_move_failed",
@@ -338,7 +338,7 @@
     },
     {
       "name": "alias_text",
-      "value": "Device name:"
+      "value": "Name:"
     },
     {
       "name": "port_text",
@@ -390,7 +390,7 @@
     },
     {
       "name": "read_pasteboard_reason",
-      "value": "用于向其他设备发送您剪切板中复制的内容"
+      "value": "To send the contents of your clipboard to other devices."
     },
     {
       "name": "history",
@@ -514,7 +514,7 @@
     },
     {
       "name": "service_offline",
-      "value": "服务器（离线）"
+      "value": "Server (offline)"
     },
     {
       "name": "alias",
@@ -554,19 +554,19 @@
     },
     {
       "name": "official_website",
-      "value": "LocalSend官方网站："
+      "value": "LocalSend official website: "
     },
     {
       "name": "about_text",
-      "value": "LocalSend 是一款免费的开源应用程序，可让您通过本地网络与附近的设备安全地分享文件和信息，而无需互联网连接。"
+      "value": "LocalSend is a free, open‑source application that lets you securely share files and information with nearby devices over your local network, without an internet connection."
     },
     {
       "name": "author",
-      "value": "作者"
+      "value": "Author"
     },
     {
       "name": "open_source",
-      "value": "开源地址："
+      "value": "Open Source: "
     }
   ]
 }

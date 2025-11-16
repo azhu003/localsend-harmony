@@ -197,6 +197,9 @@ export class WebService {
   }
 
   private async upload(exchange: HttpExchange) {
+    if (exchange.isEnd) {
+      return
+    }
     logger.info(TAG, `<<<--- upload isEnd: ${exchange.isEnd} headers: ${exchange.getRequestHeaders().toJson()}`)
     const isReceivingFiles = FileProvider.isTransferringNow()
     //当前位处于接收文件状态，直接调用了upload接口
@@ -229,13 +232,13 @@ export class WebService {
 
     if (!exchange.isEnd) {
       const flush: FlushService = new FlushService(exchange, info.file)
-      EventBus.getInstance().once(EventType.UPLOAD_FILE_CANCELED, () => {
+      EventBus.getInstance().once(EventType.UPLOAD_FILE_CANCELED, async () => {
         logger.info(TAG, `取消文件传输 -> session: ${sessionId}`)
         const target = DeviceProvider.getDevice(exchange.getRemoteAddress()?.address || '')
         if (target) {
-          WebClient.cancel(target, exchange.getQueryParams('sessionId'))
+          await WebClient.cancel(target, exchange.getQueryParams('sessionId'))
         }
-        exchange.setStatusCode(409).end("Sender cancels file sending")
+        await exchange.setStatusCode(409).end("Sender cancels file sending")
         flush.cancel()
         EventBus.getInstance().unregister(EventType.UPLOAD_FILE_CANCELED)
       })

@@ -69,19 +69,18 @@ export class WebClient {
     return await HttpRequest.post<PrepareTransferModel>(url, body, ContentType.APPLICATION_JSON, callback)
   }
 
-  static cancel(target: DeviceModel, sessionId: string) {
+  static async cancel(target: DeviceModel, sessionId: string) :Promise<void>{
     if (!target.hostname) {
       logger.info(TAG, `通知对方取消传输失败 hostname 无效, session: ${sessionId}`)
       return
     }
-    const url = `${WebClient.getCombinedURL(target.hostname, target.port, ApiConstant.CANCEL)}?sessionId=${sessionId}`
-    HttpRequest.post<BaseResponse>(url, null)
-      .then(() => {
-        logger.info(TAG, `通知对方取消传输 -> session: ${sessionId}`)
-      })
-      .catch((reason: object) => {
-        logger.info(TAG, `通知对方取消传输失败 error: ${JSON.stringify(reason)}`)
-      })
+    try {
+      const url = `${WebClient.getCombinedURL(target.hostname, target.port, ApiConstant.CANCEL)}?sessionId=${sessionId}`
+      await HttpRequest.post<BaseResponse>(url, null)
+      logger.info(TAG, `通知对方取消传输 OK -> session: ${sessionId}`)
+    } catch (e) {
+      logger.info(TAG, `通知对方取消传输失败 error: ${Errors.getErrorMessage(e)}`)
+    }
   }
 
   static async upload(sessionId: string, target: DeviceModel, files: FileInfoModel[], fileTokens: StringPair): Promise<void> {

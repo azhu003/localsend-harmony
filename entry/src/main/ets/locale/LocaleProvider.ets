@@ -2,9 +2,9 @@ import i18n from '@ohos.i18n';
 import { Errors, logger } from 'common';
 import { Keys } from '../constant';
 import { deviceInfo } from '@kit.BasicServicesKit';
+import { LocaleType } from './LocaleType';
 
 export class LocaleProvider {
-
   static setSpecifiedLocal(lang: string, isFromAuto: boolean = false): boolean {
     const app = i18n.System.getAppPreferredLanguage()
     if (lang.toString() == app) {
@@ -27,6 +27,9 @@ export class LocaleProvider {
 
   static setAutoLocale(): boolean {
     let lang = LocaleProvider.getSystemLanguage()
+    if (lang != LocaleType.ENGLISH_US && lang != LocaleType.CHINESE_HANS_CN) {
+      lang = LocaleType.ENGLISH_US
+    }
     if (LocaleProvider.setSpecifiedLocal(lang, true)) {
       AppStorage.set(Keys.LANGUAGE_IS_AUTO, true)
       return true

@@ -10,6 +10,9 @@ const logger: Logger = getLogger('Parser')
 
 export class Parser {
   static parseHeader(header: string, exchange: HttpExchangeImpl) {
+    if (exchange.isEnd) {
+      return
+    }
     // 把socket字符串按照换行符分割成多行，并取出第一行
     const lines: string[] = header.split(/[\r\n]+/);
     let line: string | undefined = lines.shift();

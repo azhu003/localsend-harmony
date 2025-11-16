@@ -1,10 +1,11 @@
 {
   "app": {
     "bundleName": "com.jerry.localsend",
-    "vendor": "example",
+    "vendor": "Jerry·H",
     "versionCode": 1000001,
     "versionName": "1.0.1",
     "icon": "$media:app_icon",
+    "minAPIVersion": 12,
     "label": "$string:app_name"
   }
 }
