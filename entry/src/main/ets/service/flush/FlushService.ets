@@ -81,10 +81,10 @@ export class FlushService {
         }
         //发送文件写入进度信息
         const elapsed = Dates.consumed(lastNotice)
-        if (elapsed > 200) {
+        if (elapsed > 200 && !this.isFinished) {
           const duration = Dates.consumed(this.startMilli)
           const speed = FileProvider.getTransferSpeed(this.progress, duration)
-          console.info(`speed: ${speed} duration: ${duration}`)
+          // console.info(`speed: ${speed} duration: ${duration} progress: ${this.progress}`)
           this.postEvent({
             fileId: this.fileInfo.id,
             status: FileTransferStatus.TRANSFERRING,
@@ -185,6 +185,8 @@ export class FlushService {
         total: this.fileInfo.size,
         speed: 0
       })
+      this.close()
+      this.queue = []
       FileProvider.deleteFile(this.filePath)
       return true
     }

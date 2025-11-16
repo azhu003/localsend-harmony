@@ -26,7 +26,6 @@ const TAG: string = "WebService"
 export class WebService {
   udp: socket.MulticastSocket = socket.constructMulticastSocketInstance();
   server: HttpServer = createHttpServer()
-
   isRunning: boolean = false
   filesDir: string = ''
   alias: string = ''
@@ -69,9 +68,7 @@ export class WebService {
         .get('/api/localsend/v1/info', this.info)
         .post('/api/localsend/v2/register', this.register)
         .post('/api/localsend/v2/prepare-upload', this.prepareUpload)
-        .post('/api/localsend/v2/upload', async (exchange: HttpExchange) => {
-          await this.upload(exchange)
-        })
+        .post('/api/localsend/v2/upload', async (exchange: HttpExchange) => await this.upload(exchange))
         .post('/api/localsend/v2/cancel', this.cancel)
         .post('/api/localsend/v2/download', this.download)
         .start()
@@ -233,12 +230,13 @@ export class WebService {
     if (!exchange.isEnd) {
       const flush: FlushService = new FlushService(exchange, info.file)
       EventBus.getInstance().once(EventType.UPLOAD_FILE_CANCELED, () => {
-        flush.cancel()
+        logger.info(TAG, `取消文件传输 -> session: ${sessionId}`)
         const target = DeviceProvider.getDevice(exchange.getRemoteAddress()?.address || '')
         if (target) {
           WebClient.cancel(target, exchange.getQueryParams('sessionId'))
-          exchange.setStatusCode(409).end("Sender cancels file sending")
         }
+        exchange.setStatusCode(409).end("Sender cancels file sending")
+        flush.cancel()
         EventBus.getInstance().unregister(EventType.UPLOAD_FILE_CANCELED)
       })
       if (exchange.getAttribute('on-data') === undefined) {

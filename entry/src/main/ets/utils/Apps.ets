@@ -1,5 +1,7 @@
-import { common, OpenLinkOptions, Want } from '@kit.AbilityKit';
+import { common, OpenLinkOptions, Want, wantConstant } from '@kit.AbilityKit';
 import { deviceInfo } from '@kit.BasicServicesKit';
+import { mime } from './mime';
+import { fileUri } from '@kit.CoreFileKit';
 
 export class Apps {
   /**
@@ -25,5 +27,22 @@ export class Apps {
     }
   }
 
-
+  static async useOtherAppOpenFile(context: common.UIAbilityContext, filepath: string): Promise<void> {
+    try {
+      console.log(`打开文件 格式 -> ${mime.getType(filepath)} path: ${filepath}`)
+      let uri = fileUri.getUriFromPath(filepath);
+      // 构造请求数据
+      let want: Want = {
+        action: 'ohos.want.action.viewData', // 表示查看数据的操作，文件打开场景固定为此值
+        uri: uri,
+        type: mime.getType(filepath) || '*/*', // 表示待打开文件的类型
+        // 配置被分享文件的读写权限，例如对文件打开应用进行读写授权
+        flags: wantConstant.Flags.FLAG_AUTH_READ_URI_PERMISSION
+      };
+      return await context.startAbility(want)
+    } catch (error) {
+      console.error(`Open file failed: ${JSON.stringify(error)}`);
+      return Promise.reject(error)
+    }
+  }
 }

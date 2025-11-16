@@ -69,15 +69,18 @@ export class WebClient {
     return await HttpRequest.post<PrepareTransferModel>(url, body, ContentType.APPLICATION_JSON, callback)
   }
 
-  static async cancel(target: DeviceModel, sessionId: string): Promise<void> {
+  static cancel(target: DeviceModel, sessionId: string) {
     if (!target.hostname) {
-      return Promise.reject()
+      logger.info(TAG, `通知对方取消传输失败 hostname 无效, session: ${sessionId}`)
+      return
     }
     const url = `${WebClient.getCombinedURL(target.hostname, target.port, ApiConstant.CANCEL)}?sessionId=${sessionId}`
     HttpRequest.post<BaseResponse>(url, null)
-      .then()
+      .then(() => {
+        logger.info(TAG, `通知对方取消传输 -> session: ${sessionId}`)
+      })
       .catch((reason: object) => {
-        logger.info(TAG, `cancel result error: ${JSON.stringify(reason)}`)
+        logger.info(TAG, `通知对方取消传输失败 error: ${JSON.stringify(reason)}`)
       })
   }
 

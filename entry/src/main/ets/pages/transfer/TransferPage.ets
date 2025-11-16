@@ -1,12 +1,11 @@
 import { DialogAction, DialogHelper, SpinKit, SpinType } from '@pura/harmony-dialog';
-import { Errors, logger, Screens, SizeConstant, Strings, toast } from 'common';
+import { Screens, SizeConstant } from 'common';
 import { IconButton, NavigationTitle } from '../../components';
 import {
   DeviceModel,
   FileInfoModel,
   FileTransferInfo,
   FileTransferStatus,
-  IMoveFile,
   TransferPageParam,
   TransferProgressChangedAction
 } from '../../model';
@@ -15,9 +14,6 @@ import { Dates, FileProvider, Routers } from '../../utils';
 import { FileItem } from './FileItem';
 import { EventBus, EventType } from '../../eventbus';
 import { emitter } from '@kit.BasicServicesKit';
-import { Keys } from '../../constant';
-import { ReceivedRecordMapper } from '../../db/mapper/ReceiveRecordMapper';
-import { Wapper } from 'rdbplus';
 
 @Builder
 export function TransferPageBuilder() {
@@ -31,16 +27,18 @@ export struct TransferPage {
   @State bottomPadding: Length = 0
   //总大小
   @State total: number = 0
-  //总进度
-  @State totalProgress: number = 0
-  //当前文件传输进度
+  //所有文件总传输进度
   @State progress: number = 0
+  //用于缓存多个文件同时传输时，每个文件的传输进度
+  fileProgress: Map<string, number> = new Map()
   //总进度(百分比)
   @State percentage: number = 0
   //上传速度
   @State speed: number = 0
   //已完成数量
   @State completed: number = 0
+  //传输开始时间
+  startMilli: number = Dates.now()
   @State param: TransferPageParam = new TransferPageParam(false, [])
   @State status: Map<string, FileTransferInfo> = new Map()
   @State allCompleted: boolean = false
@@ -74,7 +72,7 @@ export struct TransferPage {
             List({ space: SizeConstant.SPACE_M }) {
               ForEach(this.param.files, (item: FileInfoModel) => {
                 ListItem() {
-                  FileItem({ file: item, status: this.status[item.id]})
+                  FileItem({ file: item, status: this.status[item.id] })
                 }
               }, (item: FileInfoModel, index: number) => `${item.id}_${index}`)
               ListItem().height(this.bottomPadding)
@@ -88,23 +86,6 @@ export struct TransferPage {
             })
             .backgroundColor($r('app.color.background'))
             .listDirection(Axis.Vertical)
-
-            // Text($r('app.string.save_directory', FileProvider.getDefaultFileDir(getContext(this))))
-            Text($r('app.string.save_directory', '/Download/LocalSend'))
-              .width('100%')
-              .fontColor($r('app.color.on_background'))
-              .fontSize(SizeConstant.TEXT_XL)
-              .textAlign(TextAlign.Start)
-              .alignRules({
-                top: { anchor: "__container__", align: VerticalAlign.Top },
-                start: { anchor: "__container__", align: HorizontalAlign.Start }
-              })
-              .margin({ left: SizeConstant.SPACE_L, right: SizeConstant.SPACE_L })
-              .padding({ top: SizeConstant.SPACE_L, bottom: SizeConstant.SPACE_L })
-              .visibility(this.param.isSent ? Visibility.None : Visibility.Visible)
-              .onAreaChange((_: Area, newValue: Area) => {
-                this.topPadding = newValue.height
-              })
 
             // 底部传输进度
             Column() {
@@ -125,10 +106,9 @@ export struct TransferPage {
                     Blank().height(SizeConstant.SPACE_M)
                     Text($r('app.string.file_of_numbers', `${this.completed}/${this.param.files.length}`))
                       .fontSize(SizeConstant.TEXT_L)
-                    Text($r('app.string.size_text',
-                      `${FileProvider.formatBytes(this.totalProgress + this.progress)} / ${FileProvider.formatBytes(this.total)}`))
+                    Text($r('app.string.size_text', `${FileProvider.formatBytes(this.progress)}/${FileProvider.formatBytes(this.total)}`))
                       .fontSize(SizeConstant.TEXT_L)
-                    Text($r('app.string.speed_text', `${FileProvider.formatBytes(this.speed)}/s`))
+                    Text($r('app.string.speed_text', FileProvider.formatBytes(this.speed) + '/s'))
                       .fontSize(SizeConstant.TEXT_L)
                   }
                   .width('100%')
@@ -248,7 +228,7 @@ export struct TransferPage {
       return $r('app.string.total_progress', '-')
     } else {
       //预计剩余时间
-      const estimated = Number.parseFloat(((this.total - this.totalProgress - this.progress) / this.speed).toFixed(2))
+      const estimated = Number.parseFloat(((this.total - this.progress) / this.speed).toFixed(2))
       return $r('app.string.total_progress', `${Dates.getSecondsToTime(estimated)}`)
     }
   }
@@ -301,29 +281,29 @@ export struct TransferPage {
    * 监听传输进度
    */
   setTransferProgressChangedObserver() {
+    this.startMilli = Dates.now()
     EventBus.getInstance().on(EventType.TRANSFER_PROGRESS_CHANGED_ACTION, (data: emitter.EventData) => {
       const action = data.data as TransferProgressChangedAction
       if (action) {
-        if (action.status == FileTransferStatus.TRANSFERRING) {
-          this.progress = action.progress
-          this.percentage = Number.parseFloat((((this.totalProgress + action.progress) / this.total) * 100).toFixed(2))
-        } else if (action.status == FileTransferStatus.COMPLETED) {
-          this.progress = 0
-          this.totalProgress += action.progress
+        if (action.status == FileTransferStatus.TRANSFERRING || action.status == FileTransferStatus.COMPLETED) {
+          // this.progress = action.progress
+          this.fileProgress.set(action.fileId, action.progress)
+          this.progress = Array.from(this.fileProgress.values()).reduce((sum, value) => sum + value, 0)
+          if (this.progress == this.total) {
+            this.percentage = 100
+          } else {
+            this.percentage = Number.parseFloat(((this.progress / this.total) * 100).toFixed(2))
+          }
         }
-        if (action.speed > 0) {
-          this.speed = action.speed
-        }
+        this.speed = FileProvider.getTransferSpeed(this.progress, Dates.consumed(this.startMilli))
+
         if (action.status != FileTransferStatus.QUEUE && action.status != FileTransferStatus.TRANSFERRING) {
-          this.progress = 0
+          // this.progress = 0
           if (this.completed < this.param.files.length) {
             this.completed += 1
           }
           if (!this.allCompleted && this.completed === this.param.files.length) {
             this.allCompleted = true
-            // if (!this.param.isSent && action.status === FileTransferStatus.COMPLETED) {
-            //   this.onReceiveComplete()
-            // }
           }
         }
         const index = this.param.files.findIndex((info: FileInfoModel) => info.id === action.fileId)
@@ -331,9 +311,11 @@ export struct TransferPage {
           this.status[action.fileId].status = action.status.valueOf()
           if (action.status == FileTransferStatus.TRANSFERRING) {
             this.status[action.fileId].progress = Number.parseFloat(((action.progress / action.total) * 100).toFixed(2))
+            this.status[action.fileId].speed = action.speed
           } else if (action.status == FileTransferStatus.COMPLETED) {
             this.status[action.fileId].status = action.status
             this.status[action.fileId].filePath = action.filePath
+            this.status[action.fileId].speed = action.speed
           }
         }
       }
@@ -355,92 +337,4 @@ export struct TransferPage {
       this.mTransferInfoHeight = 0
     }
   }
-
-  /**
-   * 接收完成，弹窗提示移动文件到Download应用文件夹
-   */
-  // onReceiveComplete() {
-  //   this.mMoveFileAuthorizeDialogId = DialogHelper.showCustomDialog<MoveFileDialogOptions>(
-  //     wrapBuilder(MoveFileDialogBuilder),
-  //     {
-  //       uiContext: this.getUIContext(),
-  //       onAction: (action: DialogAction) => {
-  //         if (action === DialogAction.ONE && this.mMoveFileAuthorizeDialogId != null) {
-  //           DialogHelper.closeDialog(this.mMoveFileAuthorizeDialogId)
-  //           this.mMoveFileAuthorizeDialogId = null
-  //         }
-  //       },
-  //       context: getContext(this),
-  //       onMovementAuthorized: async () => {
-  //         if (this.mMoveFileAuthorizeDialogId != null) {
-  //           DialogHelper.closeDialog(this.mMoveFileAuthorizeDialogId)
-  //           this.mMoveFileAuthorizeDialogId = null
-  //         }
-  //         this.doMoveReceiveFiles()
-  //       },
-  //     }
-  //   )
-  // }
-  //
-  // private async doMoveReceiveFiles() {
-  //   //picker.DocumentViewPicker(context).save(options) 导致了loading不显示?
-  //   // DialogHelper.showLoadingDialog({
-  //   //   loadType: SpinType.spinZ,
-  //   //   loadColor: $r('app.color.on_container'),
-  //   //   backgroundColor: $r('app.color.container'),
-  //   //   autoCancel: false,
-  //   //   isModal: false
-  //   // })
-  //   /**
-  //    * DocumentViewPicker会导致Dialog无法正常显示
-  //    * @link https://developer.huawei.com/consumer/cn/doc/harmonyos-releases-V5/changelogs-ux-b071-V5#%E6%A8%A1%E6%80%81uiextension%E5%88%9B%E5%BB%BA%E9%BB%98%E8%AE%A4%E8%A1%8C%E4%B8%BA%E5%8F%98%E6%9B%B4
-  //    */
-  //   this.isMovingFile = true
-  //   try {
-  //     const completeFileInfos: FileTransferInfo[] = []
-  //     const keys: string[] = Object.keys(this.status)
-  //     for (let i = 0; i < keys.length; i++) {
-  //       const element: FileTransferInfo = this.status[keys[i]]
-  //       if (element.status === FileTransferStatus.COMPLETED && element.filePath) {
-  //         completeFileInfos.push(element)
-  //       }
-  //     }
-  //     let succeed = 0
-  //     if (completeFileInfos.length > 0) {
-  //       succeed = await FileProvider.moveFilesToDownload(getContext(this), completeFileInfos, (moved: IMoveFile) => {
-  //         this.onMovedFileComplete(moved)
-  //       })
-  //       if (succeed === 0) {
-  //         toast.show($r('app.string.file_move_failed'))
-  //       } else if (succeed === completeFileInfos.length) {
-  //         toast.show($r('app.string.file_move_complete'))
-  //       } else {
-  //         toast.show($r('app.string.some_file_move_failed'))
-  //       }
-  //     }
-  //   } catch (e) {
-  //     logger.warn('TransferPage', `移动文件出错: ${Errors.getErrorMessage(e)}`)
-  //   } finally {
-  //     // DialogHelper.closeLoading()
-  //     this.isMovingFile = false
-  //   }
-  // }
-  //
-  // private onMovedFileComplete(moved: IMoveFile) {
-  //   if (this.param.isSent || !AppStorage.get<boolean>(Keys.SAVE_RECEIVE_RECORD) ||
-  //     !(moved instanceof FileTransferInfo) || Strings.isEmpty(moved.getFilepath())) {
-  //     logger.debug('TransferPage', `更新接收记录 已跳过`)
-  //     return
-  //   }
-  //   new ReceivedRecordMapper().update(new Wapper().set('filePath', moved.getFilepath()).eq('fileId', moved.fileId))
-  //     .then(() => {
-  //       logger.debug('TransferPage', `更新接收记录成功 => fileId: ${moved.fileId} newFilePath: ${moved.getFilepath()}`)
-  //     })
-  //     .catch((reason: object) => {
-  //       logger.warn(
-  //         'TransferPage',
-  //         `更新接收记录失败 => fileId: ${moved.fileId} newFilePath: ${moved.getFilepath()} Error: ${Errors.getErrorMessage(reason)}`
-  //       )
-  //     })
-  // }
 }

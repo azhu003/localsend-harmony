@@ -24,6 +24,10 @@ export struct FileItem {
           .width('100%')
         Blank().height(SizeConstant.SPACE_EXTRA_S)
         if (this.status?.status === FileTransferStatus.TRANSFERRING) {
+          Text(`${FileProvider.formatBytes(this.status.speed)}/s`)
+            .fontSize(SizeConstant.TEXT_S)
+            .fontColor($r('app.color.highlights'))
+          Blank().height(SizeConstant.SPACE_EXTRA_S)
           Progress({
             value: this.status.progress || 0,
             total: 100,
