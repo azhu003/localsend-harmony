@@ -18,5 +18,5 @@
 - 克隆源代码自行编译
 
 ### 截图
-
-<img src="https://raw.githubusercontent.com/azhu003/localsend-harmony/main/screenshot/Screenshot_20241213185543723.jpeg" alt="screenshot" height="450"/> <img src="https://raw.githubusercontent.com/azhu003/localsend-harmony/main/screenshot/Screenshot_20241213190138973.jpeg" alt="screenshot" height="450"/>  <img src="https://raw.githubusercontent.com/azhu003/localsend-harmony/main/screenshot/Screenshot_20241218184808888.jpeg" alt="screenshot" height="450"/>
+<img src="https://raw.githubusercontent.com/azhu003/localsend-harmony/main/screenshot/Screenshot_20251116191315021.png" alt="screenshot" height="450"/> <img src="https://raw.githubusercontent.com/azhu003/localsend-harmony/main/screenshot/Screenshot_20251116192245339.png" alt="screenshot" height="450"/>  <img src="https://raw.githubusercontent.com/azhu003/localsend-harmony/main/screenshot/Screenshot_20251116190700034.png" alt="screenshot" height="450"/>
+<img src="https://raw.githubusercontent.com/azhu003/localsend-harmony/main/screenshot/Screenshot_20251116192831644.png" alt="screenshot" height="450"/>

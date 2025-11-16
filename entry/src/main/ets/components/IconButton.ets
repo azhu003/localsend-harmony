@@ -1,5 +1,6 @@
 import { SizeConstant } from 'common'
-import { LengthMetrics } from '@kit.ArkUI'
+import { LengthMetrics, MeasureText, MeasureUtils } from '@kit.ArkUI'
+import { resourceManager } from '@kit.LocalizationKit'
 
 @Component
 export struct IconButton {
@@ -42,13 +43,20 @@ export struct IconButton {
   }
 
   calcWidth(): number {
-    let textWidth: number
+    const context = this.getUIContext()
+    let text = ''
     if (typeof this.text === 'string') {
-      textWidth = this.textSize * (this.text as string).length
+      text = this.text as string
     } else {
-      textWidth = this.textSize * getContext(this).resourceManager.getStringSync(this.text).length
+      text = context.getHostContext()?.resourceManager.getStringSync((this.text as Resource).id) || ""
     }
+    const textWidth = this.getUIContext().getMeasureUtils().measureText({
+      textContent: text,
+      fontSize: `${this.textSize}px`,
+      maxLines: 1
+    })
     return textWidth + this.iconSize + this.space + (this.horizontalPadding * 2)
+
   }
 
   calcHeight(): number {
