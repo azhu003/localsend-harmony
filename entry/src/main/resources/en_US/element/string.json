@@ -11,6 +11,562 @@
     {
       "name": "EntryAbility_label",
       "value": "LanSend"
+    },
+    {
+      "name": "locale",
+      "value": "English"
+    },
+    {
+      "name": "receive",
+      "value": "Receive"
+    },
+    {
+      "name": "send",
+      "value": "Send"
+    },
+    {
+      "name": "setting",
+      "value": "Settings"
+    },
+    {
+      "name": "select",
+      "value": "Selection"
+    },
+    {
+      "name": "file",
+      "value": "File"
+    },
+    {
+      "name": "media",
+      "value": "Media"
+    },
+    {
+      "name": "folder",
+      "value": "Folder"
+    },
+    {
+      "name": "text",
+      "value": "Text"
+    },
+    {
+      "name": "clipboard",
+      "value": "Paste"
+    },
+    {
+      "name": "delete_all",
+      "value": "删除全部"
+    },
+    {
+      "name": "no_data",
+      "value": "无数据"
+    },
+    {
+      "name": "clipboard_permission_tips",
+      "value": "由于系统限制，为了保护你的隐私安全，请点击下方\"粘贴\"按钮，以授权APP临时读取剪切板内容"
+    },
+    {
+      "name": "clipboard_permission_failed",
+      "value": "获取临时授权失败，无法读取剪切板数据"
+    },
+    {
+      "name": "clipboard_nodata",
+      "value": "当前剪切板无内容"
+    },
+    {
+      "name": "nearby_devices",
+      "value": "Nearby devices"
+    },
+    {
+      "name": "troubleshooting",
+      "value": "Troubleshoot"
+    },
+    {
+      "name": "same_network_tips",
+      "value": "Please ensure that the desired target is also on the same Wi-Fi network."
+    },
+    {
+      "name": "solution_tips",
+      "value": "Does the app not work as expected? Here you can find some common solutions to problems."
+    },
+    {
+      "name": "firewall_title",
+      "value": "This device can send files to other devices but other devices cannot send files to this device."
+    },
+    {
+      "name": "firewall_text",
+      "value": "This is most likely a firewall issue. You can solve this by allowing incoming connections (UDP and TCP) on port %d."
+    },
+    {
+      "name": "discover_title",
+      "value": "This device cannot discover other devices."
+    },
+    {
+      "name": "discover_text",
+      "value": "Please make sure that all devices are on the same Wi-Fi network and share the same configuration (port, multicast address, encryption). You can try to type the IP address of the target device manually. If this works, consider adding this device to the favorites so it can be automatically discovered in the future."
+    },
+    {
+      "name": "discover_two_way_title",
+      "value": "Both devices cannot discover each other nor can they share files."
+    },
+    {
+      "name": "discover_two_way_text",
+      "value": "Does the problem exist on both sides? If so, you need to make sure that both devices are on the same Wi-Fi network and share the same configuration (port, multicast address, encryption). The Wi-Fi network may not allow communication between participants due to Access Point (AP) Isolation. In this case, this option must be disabled on the router."
+    },
+    {
+      "name": "number_of_files",
+      "value": "File: %d"
+    },
+    {
+      "name": "size_text",
+      "value": "Size: %s"
+    },
+    {
+      "name": "edit",
+      "value": "Edit"
+    },
+    {
+      "name": "append",
+      "value": "Add"
+    },
+    {
+      "name": "enter_message",
+      "value": "Type message"
+    },
+    {
+      "name": "unselected_file",
+      "value": "No files selected"
+    },
+    {
+      "name": "unselected_file_text",
+      "value": "Please select at least one file."
+    },
+    {
+      "name": "alias_combination",
+      "value": "%s %s"
+    },
+    {
+      "name": "send_file_request_text",
+      "value": "wants to send you %d files"
+    },
+    {
+      "name": "reject",
+      "value": "Decline"
+    },
+    {
+      "name": "accept",
+      "value": "Accept"
+    },
+    {
+      "name": "received_a_message",
+      "value": "sent you a message:"
+    },
+    {
+      "name": "copy",
+      "value": "Copy"
+    },
+    {
+      "name": "close",
+      "value": "Close"
+    },
+    {
+      "name": "copy_succeed",
+      "value": "复制成功"
+    },
+    {
+      "name": "waiting_response",
+      "value": "Waiting for response…"
+    },
+    {
+      "name": "otherside_refused_the_request",
+      "value": "The recipient has rejected the request."
+    },
+    {
+      "name": "otherside_processing_other_requests",
+      "value": "The recipient is busy with another request."
+    },
+    {
+      "name": "too_many_requests",
+      "value": "请求过多"
+    },
+    {
+      "name": "error",
+      "value": "Error"
+    },
+    {
+      "name": "quick_operation",
+      "value": "快捷操作"
+    },
+    {
+      "name": "unchanged",
+      "value": "Unchanged"
+    },
+    {
+      "name": "renamed",
+      "value": "Renamed"
+    },
+    {
+      "name": "counter",
+      "value": "Counter"
+    },
+    {
+      "name": "random",
+      "value": "Random"
+    },
+    {
+      "name": "prefix",
+      "value": "Prefix"
+    },
+    {
+      "name": "zero_fill",
+      "value": "Pad with zeros"
+    },
+    {
+      "name": "alphabet_sort",
+      "value": "Sort alphabetically beforehand (A-Z)"
+    },
+    {
+      "name": "example",
+      "value": "Example"
+    },
+    {
+      "name": "enter_filename",
+      "value": "Enter file name"
+    },
+    {
+      "name": "original_name",
+      "value": "Original"
+    },
+    {
+      "name": "reset",
+      "value": "Undo changes"
+    },
+    {
+      "name": "receiving_files",
+      "value": "Receiving files"
+    },
+    {
+      "name": "sending_files",
+      "value": "Sending files"
+    },
+    {
+      "name": "save_directory",
+      "value": "Save to folder: %s"
+    },
+    {
+      "name": "total_progress",
+      "value": "Total progress（%s）"
+    },
+    {
+      "name": "file_of_numbers",
+      "value": "Files: %s"
+    },
+    {
+      "name": "speed_text",
+      "value": "Speed: %s"
+    },
+    {
+      "name": "advanced",
+      "value": "Advanced"
+    },
+    {
+      "name": "hide",
+      "value": "Hide"
+    },
+    {
+      "name": "cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "complete",
+      "value": "Done"
+    },
+    {
+      "name": "queue",
+      "value": "Queue"
+    },
+    {
+      "name": "transferring",
+      "value": "传输中"
+    },
+    {
+      "name": "incorrect",
+      "value": "出错"
+    },
+    {
+      "name": "skiped",
+      "value": "Skipped"
+    },
+    {
+      "name": "completed",
+      "value": "Finished"
+    },
+    {
+      "name": "cancel_file_transfer_title",
+      "value": "Cancel files transfer"
+    },
+    {
+      "name": "cancel_file_transfer_tips",
+      "value": "Do you really want to cancel the files transfer?"
+    },
+    {
+      "name": "continue",
+      "value": "Continue"
+    },
+    {
+      "name": "file_transfer_complete",
+      "value": "文件传输完成"
+    },
+    {
+      "name": "file_move_to_download_tips",
+      "value": "由于系统限制，当前文件存放在应用沙箱目录中(文件管理中不可见)，点击下方按钮将文件移动至“Download/LanSend”文件夹"
+    },
+    {
+      "name": "file_move_to_download_error",
+      "value": "操作失败，未能获取到临时权限"
+    },
+    {
+      "name": "file_move_failed",
+      "value": "文件移动失败"
+    },
+    {
+      "name": "some_file_move_failed",
+      "value": "部分文件移动失败"
+    },
+    {
+      "name": "file_move_complete",
+      "value": "文件移动完成"
+    },
+    {
+      "name": "alias_text",
+      "value": "Device name:"
+    },
+    {
+      "name": "port_text",
+      "value": "Port:"
+    },
+    {
+      "name": "port",
+      "value": "Port"
+    },
+    {
+      "name": "offline",
+      "value": "Offline"
+    },
+    {
+      "name": "auto_save",
+      "value": "Quick Save"
+    },
+    {
+      "name": "closed",
+      "value": "Off"
+    },
+    {
+      "name": "favorites",
+      "value": "Favorites"
+    },
+    {
+      "name": "opened",
+      "value": "On"
+    },
+    {
+      "name": "auto_save_all_tips",
+      "value": "File requests are now accepted automatically. Be aware that everyone on the local network can send you files."
+    },
+    {
+      "name": "auto_save_favorites_title",
+      "value": "Quick Save for \"Favorites\""
+    },
+    {
+      "name": "auto_save_favorites_tips",
+      "value": "File requests are now accepted automatically from devices in your favorites list.File requests are now accepted automatically from devices in your favorites list.\nWarning! Currently, this is not entirely secure, as a hacker who has the fingerprint of any device from your favorites list can send you files without restriction.\nHowever, this option is still safer than allowing all users on the local network to send you files without restriction."
+    },
+    {
+      "name": "turn_on",
+      "value": "Open"
+    },
+    {
+      "name": "positive",
+      "value": "确定"
+    },
+    {
+      "name": "read_pasteboard_reason",
+      "value": "用于向其他设备发送您剪切板中复制的内容"
+    },
+    {
+      "name": "history",
+      "value": "History"
+    },
+    {
+      "name": "open_folder",
+      "value": "Open folder"
+    },
+    {
+      "name": "delete_record",
+      "value": "Delete history"
+    },
+    {
+      "name": "clear_record_tips",
+      "value": "Clear history"
+    },
+    {
+      "name": "clear_record_tips_text",
+      "value": "Do you really want to delete the entire history?"
+    },
+    {
+      "name": "delete",
+      "value": "Delete"
+    },
+    {
+      "name": "open_file",
+      "value": "Open file"
+    },
+    {
+      "name": "open_in_fm",
+      "value": "Show in folder"
+    },
+    {
+      "name": "information",
+      "value": "Information"
+    },
+    {
+      "name": "delete_from_history",
+      "value": "Delete from history"
+    },
+    {
+      "name": "file_information",
+      "value": "File information"
+    },
+    {
+      "name": "file_name",
+      "value": "File name:"
+    },
+    {
+      "name": "file_path",
+      "value": "Path:"
+    },
+    {
+      "name": "file_size",
+      "value": "Size:"
+    },
+    {
+      "name": "sender",
+      "value": "Sender:"
+    },
+    {
+      "name": "time",
+      "value": "Time:"
+    },
+    {
+      "name": "universal",
+      "value": "General"
+    },
+    {
+      "name": "theme",
+      "value": "Theme"
+    },
+    {
+      "name": "language",
+      "value": "Language"
+    },
+    {
+      "name": "light",
+      "value": "Light"
+    },
+    {
+      "name": "dark",
+      "value": "Dark"
+    },
+    {
+      "name": "flow_system",
+      "value": "System"
+    },
+    {
+      "name": "use_pin",
+      "value": "Require PIN"
+    },
+    {
+      "name": "enter_pin",
+      "value": "Enter PIN"
+    },
+    {
+      "name": "invalid_pin",
+      "value": "Invalid PIN"
+    },
+    {
+      "name": "aut_complete",
+      "value": "Auto Finish"
+    },
+    {
+      "name": "save_to_history",
+      "value": "Save to history"
+    },
+    {
+      "name": "auto_receive_link_sharing",
+      "value": "Automatically accept requests in \"Share via link\" mode"
+    },
+    {
+      "name": "network",
+      "value": "Network"
+    },
+    {
+      "name": "service",
+      "value": "Server"
+    },
+    {
+      "name": "service_offline",
+      "value": "服务器（离线）"
+    },
+    {
+      "name": "alias",
+      "value": "Device name"
+    },
+    {
+      "name": "network_changed_tips",
+      "value": "Restart the server to apply the settings!"
+    },
+    {
+      "name": "device_type",
+      "value": "Device type"
+    },
+    {
+      "name": "device_model",
+      "value": "Device model"
+    },
+    {
+      "name": "scan_timeout",
+      "value": "Discovery Timeout"
+    },
+    {
+      "name": "secret",
+      "value": "Encryption"
+    },
+    {
+      "name": "multicast",
+      "value": "Multicast address"
+    },
+    {
+      "name": "other",
+      "value": "Other"
+    },
+    {
+      "name": "about",
+      "value": "About"
+    },
+    {
+      "name": "official_website",
+      "value": "LocalSend官方网站："
+    },
+    {
+      "name": "about_text",
+      "value": "LocalSend 是一款免费的开源应用程序，可让您通过本地网络与附近的设备安全地分享文件和信息，而无需互联网连接。"
+    },
+    {
+      "name": "author",
+      "value": "作者"
+    },
+    {
+      "name": "open_source",
+      "value": "开源地址："
     }
   ]
 }

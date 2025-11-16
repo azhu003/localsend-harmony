@@ -11,6 +11,8 @@ export class PersistentStorageProvider {
   static init(context: Context) {
     //主题：默认跟随系统
     PersistentStorage.persistProp(Keys.COLOR_MODE, ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET)
+    //语言：是否跟随系统
+    PersistentStorage.persistProp(Keys.LANGUAGE_IS_AUTO, true)
     //PIN：默认不开启PIN
     PersistentStorage.persistProp(Keys.USE_PIN_WHEN_RECEIVE, undefined)
     //保存接收记录

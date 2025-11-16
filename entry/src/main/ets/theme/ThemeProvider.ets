@@ -2,6 +2,7 @@ import { Keys } from '../constant';
 import { ConfigurationConstant } from '@kit.AbilityKit';
 import { ThemeControl, window } from '@kit.ArkUI';
 import { DefaultThemes } from './DefaultColors';
+import { Errors, logger } from 'common';
 
 export class ThemeProvider {
   static setThemeModel(model: ConfigurationConstant.ColorMode) {
@@ -46,7 +47,10 @@ export class ThemeProvider {
       const props: window.SystemBarProperties = {
         statusBarContentColor: isDark ? "#D1D1D1" : "#171717",
       };
-      mainWin.setWindowSystemBarProperties(props);
+      mainWin.setWindowSystemBarProperties(props)
+        .catch((e: Error) => {
+          logger.warn("ThemeProvider", `设置系统状态栏失败 ${Errors.getErrorMessage(e)} `)
+        });
       ThemeControl.setDefaultTheme(new DefaultThemes())
     }
   }

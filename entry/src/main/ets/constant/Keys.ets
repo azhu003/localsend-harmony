@@ -15,6 +15,10 @@ export class Keys {
    */
   static COLOR_MODE = 'COLOR_MODE'
   /**
+   * 当前APP设置的颜色模式
+   */
+  static LANGUAGE_IS_AUTO = 'LANGUAGE_IS_AUTO'
+  /**
    * 接收时开启PIN码 string
    */
   static USE_PIN_WHEN_RECEIVE = 'USE_PIN_WHEN_RECEIVE'

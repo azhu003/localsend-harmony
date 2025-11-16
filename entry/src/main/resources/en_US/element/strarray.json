@@ -1,0 +1,206 @@
+{
+  "strarray": [
+    {
+      "name": "alias_adjectives",
+      "value": [
+        {
+          "value": "Adorable"
+        },
+        {
+          "value": "Beautiful"
+        },
+        {
+          "value": "Big"
+        },
+        {
+          "value": "Bright"
+        },
+        {
+          "value": "Clean"
+        },
+        {
+          "value": "Clever"
+        },
+        {
+          "value": "Cool"
+        },
+        {
+          "value": "Cute"
+        },
+        {
+          "value": "Cunning"
+        },
+        {
+          "value": "Determined"
+        },
+        {
+          "value": "Energetic"
+        },
+        {
+          "value": "Efficient"
+        },
+        {
+          "value": "Fantastic"
+        },
+        {
+          "value": "Fast"
+        },
+        {
+          "value": "Fine"
+        },
+        {
+          "value": "Fresh"
+        },
+        {
+          "value": "Good"
+        },
+        {
+          "value": "Gorgeous"
+        },
+        {
+          "value": "Great"
+        },
+        {
+          "value": "Handsome"
+        },
+        {
+          "value": "Hot"
+        },
+        {
+          "value": "Kind"
+        },
+        {
+          "value": "Lovely"
+        },
+        {
+          "value": "Mystic"
+        },
+        {
+          "value": "Neat"
+        },
+        {
+          "value": "Nice"
+        },
+        {
+          "value": "Patient"
+        },
+        {
+          "value": "Pretty"
+        },
+        {
+          "value": "Powerful"
+        },
+        {
+          "value": "Rich"
+        },
+        {
+          "value": "Secret"
+        },
+        {
+          "value": "Smart"
+        },
+        {
+          "value": "Solid"
+        },
+        {
+          "value": "Special"
+        },
+        {
+          "value": "Strategic"
+        },
+        {
+          "value": "Strong"
+        },
+        {
+          "value": "Tidy"
+        },
+        {
+          "value": "Wise"
+        }
+      ]
+    },
+    {
+      "name": "alias_fruits",
+      "value": [
+        {
+          "value": "Apple"
+        },
+        {
+          "value": "Avocado"
+        },
+        {
+          "value": "Banana"
+        },
+        {
+          "value": "Blackberry"
+        },
+        {
+          "value": "Blueberry"
+        },
+        {
+          "value": "Broccoli"
+        },
+        {
+          "value": "Carrot"
+        },
+        {
+          "value": "Cherry"
+        },
+        {
+          "value": "Coconut"
+        },
+        {
+          "value": "Grape"
+        },
+        {
+          "value": "Lemon"
+        },
+        {
+          "value": "Lettuce"
+        },
+        {
+          "value": "Mango"
+        },
+        {
+          "value": "Melon"
+        },
+        {
+          "value": "Mushroom"
+        },
+        {
+          "value": "Onion"
+        },
+        {
+          "value": "Orange"
+        },
+        {
+          "value": "Papaya"
+        },
+        {
+          "value": "Peach"
+        },
+        {
+          "value": "Pear"
+        },
+        {
+          "value": "Pineapple"
+        },
+        {
+          "value": "Potato"
+        },
+        {
+          "value": "Pumpkin"
+        },
+        {
+          "value": "Raspberry"
+        },
+        {
+          "value": "Strawberry"
+        },
+        {
+          "value": "Tomato"
+        }
+      ]
+    }
+  ]
+}

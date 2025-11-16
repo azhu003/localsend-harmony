@@ -2,7 +2,7 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "模块描述"
+      "value": "module description"
     },
     {
       "name": "EntryAbility_desc",
@@ -11,6 +11,562 @@
     {
       "name": "EntryAbility_label",
       "value": "LanSend"
+    },
+    {
+      "name": "locale",
+      "value": "简体中文"
+    },
+    {
+      "name": "receive",
+      "value": "接收"
+    },
+    {
+      "name": "send",
+      "value": "发送"
+    },
+    {
+      "name": "setting",
+      "value": "设置"
+    },
+    {
+      "name": "select",
+      "value": "选择"
+    },
+    {
+      "name": "file",
+      "value": "文件"
+    },
+    {
+      "name": "media",
+      "value": "媒体"
+    },
+    {
+      "name": "folder",
+      "value": "文件夹"
+    },
+    {
+      "name": "text",
+      "value": "文本"
+    },
+    {
+      "name": "clipboard",
+      "value": "剪切板"
+    },
+    {
+      "name": "delete_all",
+      "value": "删除全部"
+    },
+    {
+      "name": "no_data",
+      "value": "无数据"
+    },
+    {
+      "name": "clipboard_permission_tips",
+      "value": "由于系统限制，为了保护你的隐私安全，请点击下方\"粘贴\"按钮，以授权APP临时读取剪切板内容"
+    },
+    {
+      "name": "clipboard_permission_failed",
+      "value": "获取临时授权失败，无法读取剪切板数据"
+    },
+    {
+      "name": "clipboard_nodata",
+      "value": "当前剪切板无内容"
+    },
+    {
+      "name": "nearby_devices",
+      "value": "附近的设备"
+    },
+    {
+      "name": "troubleshooting",
+      "value": "故障排除"
+    },
+    {
+      "name": "same_network_tips",
+      "value": "请确保目标连接的是同一个Wi-Fi网络"
+    },
+    {
+      "name": "solution_tips",
+      "value": "应用没有按预期工作？您可以在这里找到常用解决方案"
+    },
+    {
+      "name": "firewall_title",
+      "value": "此设备可以发送文件至其他设备，但其它设备无法发送文件到此设备。"
+    },
+    {
+      "name": "firewall_text",
+      "value": "这最可能是由防火墙引起的。你可以通过在端口%d 上允许(UDP 和 TCP)的传入请求来解决这个问题。"
+    },
+    {
+      "name": "discover_title",
+      "value": "此设备未能发现其他设备。"
+    },
+    {
+      "name": "discover_text",
+      "value": "确保所有设备都处于同一个 Wi-Fi 网络上，且共享相同的网络配置(端口、多播地址、加密选项)。您可以尝试手动键入目标设备的IP 地址。如果这有效，请考虑将此设备添加到收藏夹中，以便将来可以自动发现。"
+    },
+    {
+      "name": "discover_two_way_title",
+      "value": "双方设备均无法发现对方或者分享文件。"
+    },
+    {
+      "name": "discover_two_way_text",
+      "value": "当问题发生在双方设备上时，请先确认双方设备处于同一个 Wi‑Fi 网络上，且共享相同的网络配置（端口、多播地址、加密选项）。若因 Wi‑Fi 不允许参与者间通信，那么请在路由器中关闭“接入点 (AP) 隔离”选项。"
+    },
+    {
+      "name": "number_of_files",
+      "value": "文件: %d"
+    },
+    {
+      "name": "size_text",
+      "value": "大小: %s"
+    },
+    {
+      "name": "edit",
+      "value": "编辑"
+    },
+    {
+      "name": "append",
+      "value": "添加"
+    },
+    {
+      "name": "enter_message",
+      "value": "输入消息"
+    },
+    {
+      "name": "unselected_file",
+      "value": "未选择文件"
+    },
+    {
+      "name": "unselected_file_text",
+      "value": "请至少选择一个文件"
+    },
+    {
+      "name": "alias_combination",
+      "value": "%s的%s"
+    },
+    {
+      "name": "send_file_request_text",
+      "value": "想要发送给你 %d 个文件"
+    },
+    {
+      "name": "reject",
+      "value": "拒绝"
+    },
+    {
+      "name": "accept",
+      "value": "接受"
+    },
+    {
+      "name": "received_a_message",
+      "value": "发送给你了一条消息:"
+    },
+    {
+      "name": "copy",
+      "value": "复制"
+    },
+    {
+      "name": "close",
+      "value": "关闭"
+    },
+    {
+      "name": "copy_succeed",
+      "value": "复制成功"
+    },
+    {
+      "name": "waiting_response",
+      "value": "等待响应中..."
+    },
+    {
+      "name": "otherside_refused_the_request",
+      "value": "对方拒绝了请求"
+    },
+    {
+      "name": "otherside_processing_other_requests",
+      "value": "对方正在处理其他请求"
+    },
+    {
+      "name": "too_many_requests",
+      "value": "请求过多"
+    },
+    {
+      "name": "error",
+      "value": "错误"
+    },
+    {
+      "name": "quick_operation",
+      "value": "快捷操作"
+    },
+    {
+      "name": "unchanged",
+      "value": "未更改"
+    },
+    {
+      "name": "renamed",
+      "value": "已重命名"
+    },
+    {
+      "name": "counter",
+      "value": "计数器"
+    },
+    {
+      "name": "random",
+      "value": "随机"
+    },
+    {
+      "name": "prefix",
+      "value": "前缀"
+    },
+    {
+      "name": "zero_fill",
+      "value": "以零填充"
+    },
+    {
+      "name": "alphabet_sort",
+      "value": "事先以字母顺序排序"
+    },
+    {
+      "name": "example",
+      "value": "示例"
+    },
+    {
+      "name": "enter_filename",
+      "value": "输入文件名"
+    },
+    {
+      "name": "original_name",
+      "value": "原名"
+    },
+    {
+      "name": "reset",
+      "value": "重置"
+    },
+    {
+      "name": "receiving_files",
+      "value": "正在接收文件"
+    },
+    {
+      "name": "sending_files",
+      "value": "正在发送文件"
+    },
+    {
+      "name": "save_directory",
+      "value": "保存目录: %s"
+    },
+    {
+      "name": "total_progress",
+      "value": "总进度（%s）"
+    },
+    {
+      "name": "file_of_numbers",
+      "value": "文件: %s"
+    },
+    {
+      "name": "speed_text",
+      "value": "速度: %s"
+    },
+    {
+      "name": "advanced",
+      "value": "高级"
+    },
+    {
+      "name": "hide",
+      "value": "隐藏"
+    },
+    {
+      "name": "cancel",
+      "value": "取消"
+    },
+    {
+      "name": "complete",
+      "value": "完成"
+    },
+    {
+      "name": "queue",
+      "value": "队列"
+    },
+    {
+      "name": "transferring",
+      "value": "传输中"
+    },
+    {
+      "name": "incorrect",
+      "value": "出错"
+    },
+    {
+      "name": "skiped",
+      "value": "已跳过"
+    },
+    {
+      "name": "completed",
+      "value": "完成"
+    },
+    {
+      "name": "cancel_file_transfer_title",
+      "value": "取消文件传输"
+    },
+    {
+      "name": "cancel_file_transfer_tips",
+      "value": "要取消文件传输吗？"
+    },
+    {
+      "name": "continue",
+      "value": "继续"
+    },
+    {
+      "name": "file_transfer_complete",
+      "value": "文件传输完成"
+    },
+    {
+      "name": "file_move_to_download_tips",
+      "value": "由于系统限制，当前文件存放在应用沙箱目录中(文件管理中不可见)，点击下方按钮将文件移动至“Download/LanSend”文件夹"
+    },
+    {
+      "name": "file_move_to_download_error",
+      "value": "操作失败，未能获取到临时权限"
+    },
+    {
+      "name": "file_move_failed",
+      "value": "文件移动失败"
+    },
+    {
+      "name": "some_file_move_failed",
+      "value": "部分文件移动失败"
+    },
+    {
+      "name": "file_move_complete",
+      "value": "文件移动完成"
+    },
+    {
+      "name": "alias_text",
+      "value": "别名："
+    },
+    {
+      "name": "port_text",
+      "value": "端口："
+    },
+    {
+      "name": "port",
+      "value": "端口"
+    },
+    {
+      "name": "offline",
+      "value": "离线"
+    },
+    {
+      "name": "auto_save",
+      "value": "自动保存"
+    },
+    {
+      "name": "closed",
+      "value": "关"
+    },
+    {
+      "name": "favorites",
+      "value": "收藏夹"
+    },
+    {
+      "name": "opened",
+      "value": "开"
+    },
+    {
+      "name": "auto_save_all_tips",
+      "value": "自动接受所有文件传输请求。请注意，这会让此网络中的所有人都可以向你发送文件。"
+    },
+    {
+      "name": "auto_save_favorites_title",
+      "value": "自动保存来自“收藏夹”设备的文件"
+    },
+    {
+      "name": "auto_save_favorites_tips",
+      "value": "当前会自动接受收藏夹中设备的文件请求。\n警告：这目前并非绝对安全，知道您收藏夹列表中设备指纹的黑客仍可以向您发送文件。\n但是，此选项比“允许任何设备”更安全。"
+    },
+    {
+      "name": "turn_on",
+      "value": "打开"
+    },
+    {
+      "name": "positive",
+      "value": "确定"
+    },
+    {
+      "name": "read_pasteboard_reason",
+      "value": "用于向其他设备发送您剪切板中复制的内容"
+    },
+    {
+      "name": "history",
+      "value": "历史"
+    },
+    {
+      "name": "open_folder",
+      "value": "打开文件管理"
+    },
+    {
+      "name": "delete_record",
+      "value": "删除历史"
+    },
+    {
+      "name": "clear_record_tips",
+      "value": "清空历史记录"
+    },
+    {
+      "name": "clear_record_tips_text",
+      "value": "要清空全部历史记录吗？"
+    },
+    {
+      "name": "delete",
+      "value": "删除"
+    },
+    {
+      "name": "open_file",
+      "value": "打开文件"
+    },
+    {
+      "name": "open_in_fm",
+      "value": "在文件管理中显示"
+    },
+    {
+      "name": "information",
+      "value": "信息"
+    },
+    {
+      "name": "delete_from_history",
+      "value": "从历史记录中删除"
+    },
+    {
+      "name": "file_information",
+      "value": "文件信息"
+    },
+    {
+      "name": "file_name",
+      "value": "文件名："
+    },
+    {
+      "name": "file_path",
+      "value": "路径："
+    },
+    {
+      "name": "file_size",
+      "value": "大小："
+    },
+    {
+      "name": "sender",
+      "value": "发送者："
+    },
+    {
+      "name": "time",
+      "value": "时间："
+    },
+    {
+      "name": "universal",
+      "value": "通用"
+    },
+    {
+      "name": "theme",
+      "value": "主题"
+    },
+    {
+      "name": "language",
+      "value": "语言"
+    },
+    {
+      "name": "light",
+      "value": "亮色"
+    },
+    {
+      "name": "dark",
+      "value": "深色"
+    },
+    {
+      "name": "flow_system",
+      "value": "跟随系统"
+    },
+    {
+      "name": "use_pin",
+      "value": "需要一个 PIN"
+    },
+    {
+      "name": "enter_pin",
+      "value": "输入PIN"
+    },
+    {
+      "name": "invalid_pin",
+      "value": "无效的PIN"
+    },
+    {
+      "name": "aut_complete",
+      "value": "自动完成"
+    },
+    {
+      "name": "save_to_history",
+      "value": "保存到历史记录"
+    },
+    {
+      "name": "auto_receive_link_sharing",
+      "value": "通过链接分享：自动接受"
+    },
+    {
+      "name": "network",
+      "value": "网络"
+    },
+    {
+      "name": "service",
+      "value": "服务器"
+    },
+    {
+      "name": "service_offline",
+      "value": "服务器（离线）"
+    },
+    {
+      "name": "alias",
+      "value": "别名"
+    },
+    {
+      "name": "network_changed_tips",
+      "value": "重启服务器后生效！"
+    },
+    {
+      "name": "device_type",
+      "value": "设备类型"
+    },
+    {
+      "name": "device_model",
+      "value": "设备型号"
+    },
+    {
+      "name": "scan_timeout",
+      "value": "搜索设备超时"
+    },
+    {
+      "name": "secret",
+      "value": "加密"
+    },
+    {
+      "name": "multicast",
+      "value": "多播"
+    },
+    {
+      "name": "other",
+      "value": "其他"
+    },
+    {
+      "name": "about",
+      "value": "关于"
+    },
+    {
+      "name": "official_website",
+      "value": "LocalSend官方网站："
+    },
+    {
+      "name": "about_text",
+      "value": "LocalSend 是一款免费的开源应用程序，可让您通过本地网络与附近的设备安全地分享文件和信息，而无需互联网连接。"
+    },
+    {
+      "name": "author",
+      "value": "作者"
+    },
+    {
+      "name": "open_source",
+      "value": "开源地址："
     }
   ]
 }

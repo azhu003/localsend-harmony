@@ -6,12 +6,12 @@
         "type": "HarmonyOS",
         "material": {
           "certpath": "/Users/azdev/.ohos/config/default_localsend_g2VmwfB9UntyJPBGJyAG0IrJdOiEXy-Gb0OWf3WoZAs=.cer",
-          "storePassword": "0000001BFB4DF19219EFA8FDE1541E6924FE7191DF56596322B722A6702D87EF80B8137FBA0A6358EA4E2A",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B7717D92BF4C94E2C47D4EDDEEE11D32D468780CD0D329CEAA0A8AAAAFE254E98115B0F0F3A14A7",
+          "keyPassword": "0000001B78A25E9B213D9902CCFBA58F342F12BC08B18D4B77A01EA3562C1B80344EDDED9793C8A0E59A58",
           "profile": "/Users/azdev/.ohos/config/default_localsend_g2VmwfB9UntyJPBGJyAG0IrJdOiEXy-Gb0OWf3WoZAs=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "/Users/azdev/.ohos/config/default_localsend_g2VmwfB9UntyJPBGJyAG0IrJdOiEXy-Gb0OWf3WoZAs=.p12"
+          "storeFile": "/Users/azdev/.ohos/config/default_localsend_g2VmwfB9UntyJPBGJyAG0IrJdOiEXy-Gb0OWf3WoZAs=.p12",
+          "storePassword": "0000001B12F96AABF610F17010BC49A9243760C1EEF15B91F5FE940DBEABE793FB910208CC0BE65B882654"
         }
       }
     ],

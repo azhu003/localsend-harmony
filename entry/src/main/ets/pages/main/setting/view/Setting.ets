@@ -14,6 +14,8 @@ import { DeviceTypeAction } from './DeviceTypeAction';
 import { inputMethod } from '@kit.IMEKit';
 import { DialogHelper } from '@pura/harmony-dialog';
 import { DialogAction } from '@pura/harmony-utils/src/main/ets/entity/constraint';
+import { LanguageMenu } from './LanguageMenu';
+import { LocaleProvider } from '../../../../locale';
 
 @Component
 export struct Setting {
@@ -22,6 +24,8 @@ export struct Setting {
   @State isShowingServiceInfo: boolean = false
   @StorageProp(Keys.COLOR_MODE)
   colorMode: ConfigurationConstant.ColorMode = ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET
+  @StorageProp(Keys.LANGUAGE_IS_AUTO)
+  isAutoLanguage: boolean = true
   @StorageLink(Keys.AUTO_SAVE_MODEL) autoSaveModel: AutoSaveModel = AutoSaveModel.CLOSE
   @StorageLink(Keys.USE_PIN_WHEN_RECEIVE) pin: string | undefined = undefined
   @StorageLink(Keys.SERVICE_IS_ONLINE) @Watch('onLineChanged') isOnline: boolean = true
@@ -49,6 +53,10 @@ export struct Setting {
                 .padding(SizeConstant.SPACE_M)
               SettingItem({ text: $r('app.string.theme') }) {
                 SpinnerButton({ text: ThemeProvider.getThemeModelText(this.colorMode) }).bindMenu(ThemeMenu)
+              }
+
+              SettingItem({ text: $r('app.string.language') }) {
+                SpinnerButton({ text: LocaleProvider.getLocalText() }).bindMenu(LanguageMenu)
               }
             }
             .alignItems(HorizontalAlign.Start)

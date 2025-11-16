@@ -1,0 +1,154 @@
+{
+  "strarray": [
+    {
+      "name": "alias_adjectives",
+      "value": [
+        {
+          "value": "迷人"
+        },
+        {
+          "value": "美丽"
+        },
+        {
+          "value": "巨大"
+        },
+        {
+          "value": "明亮"
+        },
+        {
+          "value": "干净"
+        },
+        {
+          "value": "聪明"
+        },
+        {
+          "value": "帅气"
+        },
+        {
+          "value": "可爱"
+        },
+        {
+          "value": "狡猾"
+        },
+        {
+          "value": "坚定"
+        },
+        {
+          "value": "有活力"
+        },
+        {
+          "value": "高效"
+        },
+        {
+          "value": "极好"
+        },
+        {
+          "value": "快速"
+        },
+        {
+          "value": "不错"
+        },
+        {
+          "value": "新鲜"
+        },
+        {
+          "value": "好"
+        },
+        {
+          "value": "华丽"
+        },
+        {
+          "value": "伟大"
+        },
+        {
+          "value": "英俊"
+        },
+        {
+          "value": "炽热"
+        },
+        {
+          "value": "善良"
+        },
+        {
+          "value": "诚实"
+        },
+        {
+          "value": "神秘"
+        },
+        {
+          "value": "整洁"
+        },
+        {
+          "value": "开心"
+        },
+        {
+          "value": "耐心"
+        },
+        {
+          "value": "漂亮"
+        },
+        {
+          "value": "强大"
+        },
+        {
+          "value": "富有"
+        },
+        {
+          "value": "秘密"
+        },
+        {
+          "value": "聪明"
+        },
+        {
+          "value": "稳固"
+        },
+        {
+          "value": "特别"
+        },
+        {
+          "value": "战略性"
+        },
+        {
+          "value": "强大"
+        },
+        {
+          "value": "整洁"
+        },
+        {
+          "value": "智慧"
+        }
+      ]
+    },
+    {
+      "name": "alias_fruits",
+      "value": [
+        {"value": "苹果"},
+        {"value": "鳄梨"},
+        {"value": "香蕉"},
+        {"value": "黑莓"},
+        {"value": "蓝莓"},
+        {"value": "西兰花"},
+        {"value": "胡萝卜"},
+        {"value": "樱桃"},
+        {"value": "椰子"},
+        {"value": "葡萄"},
+        {"value": "柠檬"},
+        {"value": "莴苣"},
+        {"value": "芒果"},
+        {"value": "甜瓜"},
+        {"value": "蘑菇"},
+        {"value": "洋葱"},
+        {"value": "橙子"},
+        {"value": "木瓜"},
+        {"value": "桃子"},
+        {"value": "梨"},
+        {"value": "菠萝"},
+        {"value": "土豆"},
+        {"value": "南瓜"},
+        {"value": "覆盆子"},
+        {"value": "草莓"},
+        {"value": "番茄"}
+      ]
+    }
+  ]
+}

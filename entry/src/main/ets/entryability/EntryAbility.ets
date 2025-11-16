@@ -1,5 +1,5 @@
 import { Screens } from 'common';
-import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
+import { AbilityConstant, ConfigurationConstant, EnvironmentCallback, UIAbility, Want } from '@kit.AbilityKit';
 import { window } from '@kit.ArkUI';
 import { Configuration } from '@ohos.app.ability.Configuration';
 import { DialogProvider } from '../utils/DialogProvider';
@@ -7,10 +7,29 @@ import { Keys } from '../constant';
 import { PersistentStorageProvider } from '../utils';
 import { ThemeProvider } from '../theme/ThemeProvider';
 import { WindowUtils } from '../transaction/WindowUtils';
+import { LocaleProvider } from '../locale';
 
 export default class EntryAbility extends UIAbility {
-  onCreate(_want: Want, _launchParam: AbilityConstant.LaunchParam): void {
+  environmentCallbackId = -1
+  environmentCallback: EnvironmentCallback = {
 
+    onConfigurationUpdated(_: Configuration) {
+      // 在此处理语言切换逻辑（如更新界面）
+      if (AppStorage.get(Keys.LANGUAGE_IS_AUTO) === true) {
+        // 获取当前系统语言
+        const lang = LocaleProvider.getSystemLanguage()
+        LocaleProvider.setSpecifiedLocal(lang, true)
+      }
+    },
+
+    onMemoryLevel(_: AbilityConstant.MemoryLevel) {
+
+    }
+  }
+
+  onCreate(_want: Want, _launchParam: AbilityConstant.LaunchParam): void {
+    const applicationContext = this.context.getApplicationContext();
+    this.environmentCallbackId = applicationContext.on('environment', this.environmentCallback);
   }
 
   onWindowStageCreate(windowStage: window.WindowStage): void {
@@ -57,6 +76,6 @@ export default class EntryAbility extends UIAbility {
   }
 
   onDestroy(): void {
-
+    this.context.getApplicationContext().off('environment', this.environmentCallbackId)
   }
 }

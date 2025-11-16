@@ -1,5 +1,6 @@
 import { Screens, SizeConstant } from 'common'
 import { NavigationTitle } from '../../components'
+import { Keys } from '../../constant'
 import { QuestionCard } from './QuestionCard'
 
 @Builder
@@ -18,9 +19,15 @@ export struct QuestionPage {
               .fontSize(SizeConstant.TEXT_L)
               .fontColor($r('app.color.on_container'))
             Blank().height(SizeConstant.SPACE_L)
-            QuestionCard({ title: $r('app.string.firewall_title'), text: $r('app.string.firewall_text') })
+            QuestionCard({
+              title: $r('app.string.firewall_title'),
+              text: $r('app.string.firewall_text', AppStorage.get(Keys.PORT) || 53317)
+            })
             Blank().height(SizeConstant.SPACE_L)
-            QuestionCard({ title: $r('app.string.discover_title'), text: $r('app.string.discover_text') })
+            QuestionCard({
+              title: $r('app.string.discover_title'),
+              text: $r('app.string.discover_text')
+            })
             Blank().height(SizeConstant.SPACE_L)
             QuestionCard({ title: $r('app.string.discover_two_way_title'), text: $r('app.string.discover_two_way_text') })
           }
